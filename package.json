@@ -1,0 +1,44 @@
+{
+  "name": "fin-ticker-historical-stats",
+  "version": "0.0.0",
+  "description": "API for getting historicall stock/etf statistics.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "npm run build && node dist",
+    "start:dev": "nodemon",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surelybrackets/fin-ticker-historical-stats.git"
+  },
+  "author": "Matthew Bunch (bunch43@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/surelybrackets/fin-ticker-historical-stats/issues"
+  },
+  "homepage": "https://github.com/surelybrackets/fin-ticker-historical-stats#readme",
+  "devDependencies": {
+    "@types/node": "13.11.0",
+    "nodemon": "2.0.2",
+    "ts-node": "8.8.2",
+    "typescript": "3.8.3"
+  },
+  "dependencies": {
+    "express": "4.17.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm run start",
+    "ext": "ts"
+  }
+}
