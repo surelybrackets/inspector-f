@@ -77,3 +77,6 @@ typings/
 
 # builds
 dist
+
+# datastores
+data
