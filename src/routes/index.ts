@@ -1,1 +1,1 @@
-export { allStats } from './allStats'
+export { getForwardMovementStats } from './stats'
