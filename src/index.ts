@@ -7,7 +7,7 @@ const statisticsPath = '/statistics'
 
 app.get(`${statisticsPath}/:ticker`, async (req, res) => {
     try {
-        res.send(await getForwardMovementStats(req.params.ticker, undefined, req.query.dateRange))
+        res.send(await getForwardMovementStats(req.params.ticker, undefined, req.query.dateRange as string))
     } catch (err) {
         res.send(err.message)
     }
