@@ -80,3 +80,6 @@ dist
 
 # datastores
 data
+
+# vscode
+.vscode

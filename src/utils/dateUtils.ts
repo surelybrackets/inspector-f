@@ -1,11 +1,11 @@
-import * as moment from 'moment';
+import { utc, Moment } from 'moment'
 
-export const getDateInYahooFinanceTime = (date: moment.Moment = moment.utc()): number => {
+export const getDateInYahooFinanceTime = (date: Moment = utc()): number => {
     /* y = 86400x */
-    const slope: number = 86400
+    const slope = 86400
     /* x (Apr 3, 2020) = 18355 */
-    const base: number = 18355
-    const apr3rd2020: moment.Moment = moment.utc("2020_04_03", "YYYY_MM_DD")
+    const base = 18355
+    const apr3rd2020: Moment = utc('2020_04_03', 'YYYY_MM_DD')
 
     const daydSinceApr3: number = date.diff(apr3rd2020, 'days')
 
@@ -41,21 +41,20 @@ export const validateRange = (range: string): boolean => {
 export const validateDateRanges = (dateRanges: string): boolean => {
     const ranges = dateRanges.split(',')
 
-    for (let range of ranges) {
+    for (const range of ranges) {
         if (!validateRange(range)) return false
     }
     return true
 }
 
-export const getLatestDateInRange = (dateRange: string): moment.Moment => {
+export const getLatestDateInRange = (dateRange: string): Moment => {
     const ranges: string[] = dateRange.split(',')
-    let lastestDate = moment.utc("1800_01_01", "YYYY_MM_DD")
+    let lastestDate = utc('1800_01_01', 'YYYY_MM_DD')
     ranges.forEach((range: string) => {
-        let dateToCompare: moment.Moment
         if (range.includes('-')) {
             range = range.split('-')[1]
         }
-        dateToCompare = moment.utc(range, "YYYY_MM_DD")
+        const dateToCompare: Moment = utc(range, 'YYYY_MM_DD')
         lastestDate = dateToCompare.diff(lastestDate) > 0 ? dateToCompare : lastestDate
     })
     return lastestDate

@@ -7,7 +7,8 @@
     "start": "npm run build && node dist",
     "start:dev": "nodemon",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no tes specified\" && exit 1",
+    "lint": "eslint ./src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -21,15 +22,21 @@
   "homepage": "https://github.com/surelybrackets/fin-ticker-historical-stats#readme",
   "devDependencies": {
     "@types/node": "13.11.0",
+    "@typescript-eslint/eslint-plugin": "2.27.0",
+    "@typescript-eslint/parser": "2.27.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.1",
+    "eslint-plugin-prettier": "3.1.2",
     "nodemon": "2.0.2",
+    "prettier": "2.0.4",
     "ts-node": "8.8.2",
     "typescript": "3.8.3"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "csvtojson": "^2.0.10",
+    "axios": "0.19.2",
+    "csvtojson": "2.0.10",
     "express": "4.17.1",
-    "moment": "^2.24.0"
+    "moment": "2.24.0"
   },
   "nodemonConfig": {
     "ignore": [
