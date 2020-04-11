@@ -13,6 +13,7 @@ module.exports = {
         "prettier/prettier": ["error", {
             "endOfLine": "auto"
         }],
-        "eol-last": ["error", "always"]
+        "eol-last": ["error", "always"],
+        "@typescript-eslint/ban-ts-ignore": "warn"
     },
 };

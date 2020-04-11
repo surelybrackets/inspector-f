@@ -14,6 +14,7 @@ export const getDateInYahooFinanceTime = (date: Moment = utc()): number => {
 
 export const validateDateString = (dateString: string): boolean => {
     const acceptedCharacters = ['_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    if (dateString.length !== 10) return false
     for (let i = 0; i < dateString.length; i++) {
         if (!acceptedCharacters.includes(dateString[i])) return false
         if (i !== 4 && i !== 7) {
@@ -22,6 +23,7 @@ export const validateDateString = (dateString: string): boolean => {
             if (dateString[i] !== '_') return false
         }
     }
+    if (!utc(dateString, 'YYYY_MM_DD').isValid()) return false
     return true
 }
 
@@ -32,7 +34,9 @@ export const validateRange = (range: string): boolean => {
             return false
         }
         const [startDate, endDate] = splitRange
-        return validateDateString(startDate) && validateDateString(endDate)
+        if (validateDateString(startDate) && validateDateString(endDate))
+            return utc(startDate, 'YYYY_MM_DD').diff(utc(endDate, 'YYYY_MM_DD')) < 0
+        else return false
     } else {
         return validateDateString(range)
     }
