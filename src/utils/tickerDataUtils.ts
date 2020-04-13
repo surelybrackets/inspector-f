@@ -7,15 +7,13 @@ import {
     isTickerDataSaved,
     extractDateFromDataFilename,
 } from './saveData'
+import { logError } from './errorUtils'
 
 import csv = require('csvtojson')
 
-type intervalOptions = '1m' | '2m' | '5m' | '15m' | '30m' | '60m' | '90m' | '1h' | '1d' | '5d' | '1wk' | '1mo' | '3mo'
+type YahooLinkOptions = { startDate?: number; endDate?: number; interval?: intervalOptions }
 
-export const generateYahooDataLink = (
-    ticker: string,
-    options?: { startDate?: number; endDate?: number; interval?: intervalOptions },
-): string => {
+export const generateYahooDataLink = (ticker: string, options?: YahooLinkOptions): string => {
     const startDate: string = options && options.startDate ? `${options.startDate}` : `0`
     const endDate: string = options && options.endDate ? `${options.endDate}` : `${getDateInYahooFinanceTime()}`
     const interval: string = options && options.interval ? `${options.interval}` : '1d'
@@ -23,15 +21,15 @@ export const generateYahooDataLink = (
     return `https://query1.finance.yahoo.com/v7/finance/download/${ticker}?period1=${startDate}&period2=${endDate}&interval=${interval}&events=history`
 }
 
-export const isMoreDataNeeded = (
-    ticker: string,
-    dateRange?: string,
-): 'ALL' | { fileWriteDate: Moment; dataFile: string } | 'NONE' => {
+type DataToLoad = { fileWriteDate: Moment; dataFile: string }
+
+export const isMoreDataNeeded = (ticker: string, dateRange?: string): 'ALL' | DataToLoad | 'NONE' => {
     const dataFile = isTickerDataSaved(ticker)
 
     if (dataFile) {
         const today: Moment = utc()
-        const fileWriteDate: Moment = extractDateFromDataFilename(dataFile, ticker)
+
+        const fileWriteDate: Moment = extractDateFromDataFilename(dataFile)
         const lastDate: Moment = dateRange ? getLatestDateInRange(dateRange) : today
 
         if (lastDate.diff(today, 'days') > 0) {
@@ -47,7 +45,7 @@ export const isMoreDataNeeded = (
     }
 }
 
-export const getTickerData = async (ticker: string, dateRange?: string): Promise<JSON[] | JSON | string> => {
+export const getTickerData = async (ticker: string, dateRange?: string): Promise<TickerInfo[] | string> => {
     if (dateRange && !validateDateRanges(dateRange)) {
         throw new Error('Invalid date range string')
     }
@@ -58,26 +56,18 @@ export const getTickerData = async (ticker: string, dateRange?: string): Promise
         return axios
             .get(generateYahooDataLink(ticker))
             .then(async (res) => {
-                const data: JSON[] = await csv()
-                    .fromString(res.data)
-                    .on('error', (err) => {
-                        console.error(err)
-                    })
+                const data: TickerInfo[] = await csv().fromString(res.data).on('error', logError)
                 return saveHistoricalTickerData(ticker, data)
             })
             .catch((err) => {
-                console.error(err)
+                logError(err)
                 return `${err.response.status}: ${err.response.statusText}`
             })
     } else if (dataToLoad !== 'NONE') {
         const { fileWriteDate, dataFile } = dataToLoad
         const startDate: number = getDateInYahooFinanceTime(fileWriteDate.add(1, 'days'))
         return axios.get(generateYahooDataLink(ticker, { startDate })).then(async (res) => {
-            const data = await csv()
-                .fromString(res.data)
-                .on('error', (err) => {
-                    console.error(err)
-                })
+            const data = await csv().fromString(res.data).on('error', logError)
             return appendHistoricalTickerData(ticker, data)
         })
     }
