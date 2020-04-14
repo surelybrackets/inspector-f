@@ -1,19 +1,14 @@
 import express = require('express')
-import { getForwardMovementStats } from './routes'
+import * as apps from './apps'
 
-const app = express()
+const router = express()
 const PORT = 8080
-const statisticsPath = '/statistics'
 
-app.get(`${statisticsPath}/:ticker`, async (req, res) => {
-    try {
-        res.send(await getForwardMovementStats(req.params.ticker, undefined, req.query.dateRange as string))
-    } catch (err) {
-        // console.error(err)
-        res.send(err.message)
-    }
+Object.keys(apps).forEach((appName) => {
+    const { app, basePath } = apps[appName]
+    router.use(basePath, app)
 })
 
-app.listen(PORT, () => {
+router.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`)
 })

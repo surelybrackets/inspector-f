@@ -52,7 +52,6 @@ export const getTickerData = async (ticker: string, dateRange?: string): Promise
     }
 
     const dataToLoad = isMoreDataNeeded(ticker, dateRange)
-    console.log(dataToLoad)
 
     if (dataToLoad.type === 'ALL') {
         return await axios.get(generateYahooDataLink(ticker)).then(async (res) => {
