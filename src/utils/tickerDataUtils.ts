@@ -6,6 +6,7 @@ import {
     appendHistoricalTickerData,
     isTickerDataSaved,
     extractDateFromDataFilename,
+    getDataFromFile,
 } from './saveData'
 import { logError } from './errorUtils'
 
@@ -21,9 +22,9 @@ export const generateYahooDataLink = (ticker: string, options?: YahooLinkOptions
     return `https://query1.finance.yahoo.com/v7/finance/download/${ticker}?period1=${startDate}&period2=${endDate}&interval=${interval}&events=history`
 }
 
-type DataToLoad = { fileWriteDate: Moment; dataFile: string }
+type DataToLoad = { type: 'ALL' | 'PARTIAL' | 'NONE'; fileWriteDate?: Moment; dataFile?: string }
 
-export const isMoreDataNeeded = (ticker: string, dateRange?: string): 'ALL' | DataToLoad | 'NONE' => {
+export const isMoreDataNeeded = (ticker: string, dateRange?: string): DataToLoad => {
     const dataFile = isTickerDataSaved(ticker)
 
     if (dataFile) {
@@ -35,13 +36,13 @@ export const isMoreDataNeeded = (ticker: string, dateRange?: string): 'ALL' | Da
         if (lastDate.diff(today, 'days') > 0) {
             throw new Error('Date is in the future')
         }
-        if (lastDate.diff(fileWriteDate) > 0) {
-            return { fileWriteDate, dataFile }
+        if (lastDate.diff(fileWriteDate, 'days') > 0) {
+            return { type: 'PARTIAL', fileWriteDate, dataFile }
         } else {
-            return 'NONE'
+            return { type: 'NONE', fileWriteDate, dataFile }
         }
     } else {
-        return 'ALL'
+        return { type: 'ALL' }
     }
 }
 
@@ -51,24 +52,27 @@ export const getTickerData = async (ticker: string, dateRange?: string): Promise
     }
 
     const dataToLoad = isMoreDataNeeded(ticker, dateRange)
+    console.log(dataToLoad)
 
-    if (dataToLoad === 'ALL') {
-        return axios
-            .get(generateYahooDataLink(ticker))
-            .then(async (res) => {
-                const data: TickerInfo[] = await csv().fromString(res.data).on('error', logError)
-                return saveHistoricalTickerData(ticker, data)
-            })
-            .catch((err) => {
-                logError(err)
-                return `${err.response.status}: ${err.response.statusText}`
-            })
-    } else if (dataToLoad !== 'NONE') {
-        const { fileWriteDate, dataFile } = dataToLoad
-        const startDate: number = getDateInYahooFinanceTime(fileWriteDate.add(1, 'days'))
-        return axios.get(generateYahooDataLink(ticker, { startDate })).then(async (res) => {
-            const data = await csv().fromString(res.data).on('error', logError)
-            return appendHistoricalTickerData(ticker, data)
+    if (dataToLoad.type === 'ALL') {
+        return await axios.get(generateYahooDataLink(ticker)).then(async (res) => {
+            const data: TickerInfo[] = await csv().fromString(res.data).on('error', logError)
+            return saveHistoricalTickerData(ticker, data)
         })
+    } else if (dataToLoad.type === 'PARTIAL') {
+        const startDate: number = getDateInYahooFinanceTime(dataToLoad.fileWriteDate.add(1, 'days'))
+        try {
+            return await axios.get(generateYahooDataLink(ticker, { startDate })).then(async (res) => {
+                const data = await csv().fromString(res.data).on('error', logError)
+                return appendHistoricalTickerData(ticker, data)
+            })
+        } catch (e) {
+            if (e.response.data === '404 Not Found: Timestamp data missing.') {
+                dataToLoad.type = 'NONE'
+            } else throw e
+        }
+    }
+    if (dataToLoad.type === 'NONE') {
+        return getDataFromFile(dataToLoad.dataFile)
     }
 }

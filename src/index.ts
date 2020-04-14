@@ -9,7 +9,7 @@ app.get(`${statisticsPath}/:ticker`, async (req, res) => {
     try {
         res.send(await getForwardMovementStats(req.params.ticker, undefined, req.query.dateRange as string))
     } catch (err) {
-        console.error(err)
+        // console.error(err)
         res.send(err.message)
     }
 })

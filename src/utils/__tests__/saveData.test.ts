@@ -2,6 +2,7 @@ import {
     dataRoute,
     getSavedDataList,
     isTickerDataSaved,
+    getDataFromFile,
     extractDateFromDataFilename,
     saveHistoricalTickerData,
     appendHistoricalTickerData,
@@ -59,6 +60,23 @@ describe('extractDateFromDataFileName(dataFile: string, ticker: string): Moment'
     it('returns date from dataFile name', (): void => {
         expect(extractDateFromDataFilename(testFiles[0])).toStrictEqual(utc('2020_04_03', 'YYYY_MM_DD'))
         expect(extractDateFromDataFilename(testFiles[1])).toStrictEqual(utc('2020_04_03', 'YYYY_MM_DD'))
+    })
+})
+
+describe('getDataFromFile(file: string): TickerInfo[]', (): void => {
+    it('gets data from existing file', (): void => {
+        const testFile = 'aapl2020_04_03.json'
+        expect(getDataFromFile(testFile)).toStrictEqual([testData])
+    })
+    it('errors for invalid file', (done): void => {
+        const testFile = 'tsla2020_04_03.json'
+        try {
+            getDataFromFile(testFile)
+            done.fail()
+        } catch (e) {
+            expect(e).toBeDefined()
+            done()
+        }
     })
 })
 
