@@ -8,7 +8,7 @@ export const getSavedDataList = (): string[] => {
     return fs.readdirSync(dataRoute)
 }
 
-export const isTickerDataSaved = (ticker: string): string | undefined => {
+export const getSavedDataFileName = (ticker: string): string | undefined => {
     const dataFiles: string[] = getSavedDataList()
     return dataFiles.find((file: string): boolean => file.includes(ticker))
 }
@@ -21,7 +21,7 @@ export const getDataFromFile = (file: string): TickerInfo[] => {
 export const saveHistoricalTickerData = (ticker: string, data: TickerInfo[]): TickerInfo[] => {
     const todayString: string = utc().format('YYYY_MM_DD')
 
-    const oldDataFile: string = isTickerDataSaved(ticker)
+    const oldDataFile: string = getSavedDataFileName(ticker)
     if (oldDataFile) {
         fs.unlink(`${dataRoute}/${oldDataFile}`, logError)
     }
@@ -33,7 +33,7 @@ export const saveHistoricalTickerData = (ticker: string, data: TickerInfo[]): Ti
 export const appendHistoricalTickerData = (ticker: string, data: TickerInfo[]): TickerInfo[] => {
     const today: Moment = utc()
     const todayString: string = today.format('YYYY_MM_DD')
-    const oldDataFile: string = isTickerDataSaved(ticker)
+    const oldDataFile: string = getSavedDataFileName(ticker)
     if (oldDataFile) {
         const oldDataJson: TickerInfo[] = getDataFromFile(oldDataFile)
         data = oldDataJson.concat(data)

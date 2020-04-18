@@ -1,7 +1,7 @@
 import {
     dataRoute,
     getSavedDataList,
-    isTickerDataSaved,
+    getSavedDataFileName,
     getDataFromFile,
     extractDateFromDataFilename,
     saveHistoricalTickerData,
@@ -46,13 +46,13 @@ describe('getSavedDataList(): string[]', (): void => {
     })
 })
 
-describe('isTickerDataSaved(ticker: string): string | undefined', (): void => {
+describe('getSavedDataFileName(ticker: string): string | undefined', (): void => {
     it('returns data filename if data file exists', (): void => {
-        expect(isTickerDataSaved('aapl')).toBe(testFiles[0])
-        expect(isTickerDataSaved('msft')).toBe(testFiles[1])
+        expect(getSavedDataFileName('aapl')).toBe(testFiles[0])
+        expect(getSavedDataFileName('msft')).toBe(testFiles[1])
     })
     it('returns undefined if data file does not exist', (): void => {
-        expect(isTickerDataSaved('tsla')).not.toBeDefined()
+        expect(getSavedDataFileName('tsla')).not.toBeDefined()
     })
 })
 
@@ -85,14 +85,14 @@ describe('saveHistoricallTickerData(ticker: string, data: TickerInfo[]): Promise
         const testTicker = 'uber'
         const data = saveHistoricalTickerData(testTicker, [testData, testData])
         const expectedFormat = `${testTicker}${utc().format('YYYY_MM_DD')}.json`
-        expect(isTickerDataSaved(testTicker)).toBe(expectedFormat)
+        expect(getSavedDataFileName(testTicker)).toBe(expectedFormat)
         expect(data).toStrictEqual([testData, testData])
     })
     it('deletes old data file if exists', (): void => {
         const testTicker = 'aapl'
         saveHistoricalTickerData(testTicker, [testData, testData])
         const expectedFormat = `${testTicker}${utc().format('YYYY_MM_DD')}.json`
-        expect(isTickerDataSaved(testTicker)).toBe(expectedFormat)
+        expect(getSavedDataFileName(testTicker)).toBe(expectedFormat)
         expect(fs.unlink).toHaveBeenCalledWith(`${dataRoute}/${testFiles[0]}`, expect.any(Function))
     })
 })
@@ -102,7 +102,7 @@ describe('appendHistoricalTickerData(ticker: string, data: TickerInfo[]): Promis
         const testTicker = 'msft'
         const data = appendHistoricalTickerData(testTicker, [testData, testData])
         const expectedFormat = `${testTicker}${utc().format('YYYY_MM_DD')}.json`
-        expect(isTickerDataSaved(testTicker)).toBe(expectedFormat)
+        expect(getSavedDataFileName(testTicker)).toBe(expectedFormat)
         expect(data).toStrictEqual([testData, testData, testData])
     })
     it('throws error if give no data exist for ticker', (): void => {
