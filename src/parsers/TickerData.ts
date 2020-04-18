@@ -1,15 +1,12 @@
 import { utc, Moment } from 'moment'
-import axios from 'axios'
-import csv = require('csvtojson')
 import {
     getSavedDataFileName,
     saveHistoricalTickerData,
     getDataFromFile,
     extractDateFromDataFilename,
 } from '../utils/saveData'
-import { generateYahooDataLink } from '../utils/fetchData'
-import { getDateInYahooFinanceTime, validateDateRanges, isDateInDateRange, dateFormat } from '../utils/dateUtils'
-import { logError } from '../utils/errorUtils'
+import { fetchTickerData } from '../utils/fetchData'
+import { validateDateRanges, isDateInDateRange, dateFormat } from '../utils/dateUtils'
 
 export default class TickerData {
     private _ticker: string
@@ -39,13 +36,9 @@ export default class TickerData {
 
     public async refreshData(): Promise<TickerInfo[]> {
         if (!this.isSynced()) {
-            const startDate = this._lastPull
-                ? getDateInYahooFinanceTime(this._lastPull)
-                : getDateInYahooFinanceTime(utc('1800_01_01', TickerData.dateFormat))
-            const endDate = getDateInYahooFinanceTime(this._initializeDate)
-            const getString: string = generateYahooDataLink(this._ticker, { startDate, endDate })
-            const freshData = await axios.get(getString, {}).then(async (res) => {
-                return await csv().fromString(res.data).on('error', logError)
+            const freshData: TickerInfo[] = await fetchTickerData(this._ticker, {
+                startDate: this._lastPull,
+                endDate: this._initializeDate,
             })
             this._data = this._data.concat(freshData)
             this._lastPull = this._initializeDate

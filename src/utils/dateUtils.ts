@@ -2,18 +2,6 @@ import { utc, Moment } from 'moment'
 
 export const dateFormat = 'YYYY_MM_DD'
 
-export const getDateInYahooFinanceTime = (date: Moment = utc()): number => {
-    /* y = 86400x */
-    const slope = 86400
-    /* x (Apr 3, 2020) = 18355 */
-    const base = 18355
-    const apr3rd2020: Moment = utc('2020_04_03', 'YYYY_MM_DD')
-
-    const daydSinceApr3: number = date.diff(apr3rd2020, 'days')
-
-    return slope * (base + daydSinceApr3)
-}
-
 export const validateDateString = (dateString: string): boolean => {
     const acceptedCharacters = ['_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     if (dateString.length !== 10) return false

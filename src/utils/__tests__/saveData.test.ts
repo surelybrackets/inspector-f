@@ -5,7 +5,6 @@ import {
     getDataFromFile,
     extractDateFromDataFilename,
     saveHistoricalTickerData,
-    appendHistoricalTickerData,
 } from '../saveData'
 import fs = require('fs')
 import { utc } from 'moment'
@@ -94,23 +93,5 @@ describe('saveHistoricallTickerData(ticker: string, data: TickerInfo[]): Promise
         const expectedFormat = `${testTicker}${utc().format('YYYY_MM_DD')}.json`
         expect(getSavedDataFileName(testTicker)).toBe(expectedFormat)
         expect(fs.unlink).toHaveBeenCalledWith(`${dataRoute}/${testFiles[0]}`, expect.any(Function))
-    })
-})
-
-describe('appendHistoricalTickerData(ticker: string, data: TickerInfo[]): Promise<TickerInfo[]>', (): void => {
-    it('appends data new data to existing file', (): void => {
-        const testTicker = 'msft'
-        const data = appendHistoricalTickerData(testTicker, [testData, testData])
-        const expectedFormat = `${testTicker}${utc().format('YYYY_MM_DD')}.json`
-        expect(getSavedDataFileName(testTicker)).toBe(expectedFormat)
-        expect(data).toStrictEqual([testData, testData, testData])
-    })
-    it('throws error if give no data exist for ticker', (): void => {
-        const testTicker = 'tsla'
-        try {
-            appendHistoricalTickerData(testTicker, [testData, testData])
-        } catch (e) {
-            expect(e.message).toBe(`500 Internal Server Error: Failed to fetch data`)
-        }
     })
 })

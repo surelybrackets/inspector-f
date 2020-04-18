@@ -30,21 +30,6 @@ export const saveHistoricalTickerData = (ticker: string, data: TickerInfo[]): Ti
     return data
 }
 
-export const appendHistoricalTickerData = (ticker: string, data: TickerInfo[]): TickerInfo[] => {
-    const today: Moment = utc()
-    const todayString: string = today.format('YYYY_MM_DD')
-    const oldDataFile: string = getSavedDataFileName(ticker)
-    if (oldDataFile) {
-        const oldDataJson: TickerInfo[] = getDataFromFile(oldDataFile)
-        data = oldDataJson.concat(data)
-        fs.writeFile(`${dataRoute}/${ticker}${todayString}.json`, JSON.stringify(data), logError)
-        fs.unlink(`${dataRoute}/${oldDataFile}`, logError)
-    } else {
-        throw new Error(`500 Internal Server Error: Failed to fetch data`)
-    }
-    return data
-}
-
 export const extractDateFromDataFilename = (dataFile: string): Moment => {
     const indexOfDate: number = dataFile.search(/\d/)
     const fileWriteDateString: string = dataFile.slice(indexOfDate, dataFile.length - 5)
