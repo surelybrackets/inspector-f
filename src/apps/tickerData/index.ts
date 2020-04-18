@@ -1,12 +1,14 @@
 import express = require('express')
-import { getTickerData } from '../../utils/fetchData'
+import TickerData from '../../parsers/TickerData'
 
 const app = express()
 const basePath = '/ticker-data'
 
 app.get(`/:ticker`, async (req, res) => {
     try {
-        res.send(await getTickerData(req.params.ticker, req.query.dateRange as string))
+        const tickerData = new TickerData(req.params.ticker)
+        await tickerData.refreshData()
+        res.send(tickerData.filter(req.query.dateRange as string))
     } catch (err) {
         // console.error(err)
         res.send(err.message)
