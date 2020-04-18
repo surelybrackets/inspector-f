@@ -1,5 +1,7 @@
 import { utc, Moment } from 'moment'
 
+export const dateFormat = 'YYYY_MM_DD'
+
 export const getDateInYahooFinanceTime = (date: Moment = utc()): number => {
     /* y = 86400x */
     const slope = 86400
@@ -62,4 +64,18 @@ export const getLatestDateInRange = (dateRange: string): Moment => {
         lastestDate = dateToCompare.diff(lastestDate) > 0 ? dateToCompare : lastestDate
     })
     return lastestDate
+}
+
+export const isDateInDateRange = (date: Moment, dateRange: string): boolean => {
+    for (const range of dateRange.split(',')) {
+        if (range.includes('-')) {
+            const [startDate, endDate] = range.split('-')
+            if (utc(startDate, dateFormat).diff(date, 'days') <= 0 && utc(endDate, dateFormat).diff(date, 'days') >= 0)
+                return true
+        } else {
+            const testDate: Moment = utc(range, dateFormat)
+            if (testDate.diff(date, 'days') === 0) return true
+        }
+    }
+    return false
 }

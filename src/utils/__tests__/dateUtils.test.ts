@@ -1,9 +1,11 @@
 import {
+    dateFormat,
     getDateInYahooFinanceTime,
     validateDateString,
     validateRange,
     validateDateRanges,
     getLatestDateInRange,
+    isDateInDateRange,
 } from '../dateUtils'
 import { utc, Moment } from 'moment'
 
@@ -117,6 +119,49 @@ describe('getLatestDateInRange(dateRange: string): Momemnt', (): void => {
         ]
         testStrings.forEach((item: string[]) => {
             expect(getLatestDateInRange(item[0])).toStrictEqual(utc(item[1], 'YYYY_MM_DD'))
+        })
+    })
+})
+
+describe('isDateInDateRange(date: Moment, dateRange: string): boolean', (): void => {
+    it('returns true for single date that matches', (): void => {
+        const testDate = utc('2000_01_01', dateFormat)
+        const testDateRange = '2000_01_01'
+        expect(isDateInDateRange(testDate, testDateRange)).toBe(true)
+    })
+    it("returns false for single date that doesn't matach", (): void => {
+        const testDate = utc('2010_12_31', dateFormat)
+        const testDateRange = '2000_01_01'
+        expect(isDateInDateRange(testDate, testDateRange)).toBe(false)
+    })
+    it('return true for dates within defined range', (): void => {
+        const testDates: Moment[] = [
+            utc('2000_01_01', dateFormat),
+            utc('1999_01_01', dateFormat),
+            utc('2001_01_01', dateFormat),
+        ]
+        const testDateRange = '1999_01_01-2001_01_01'
+        testDates.forEach((testDate: Moment) => {
+            expect(isDateInDateRange(testDate, testDateRange)).toBe(true)
+        })
+    })
+    it('returns false for dates outside of defined range', (): void => {
+        const testDates: Moment[] = [utc('2002_01_01', dateFormat), utc('1998_01_01', dateFormat)]
+        const testDateRange = '1999_01_01-2001_01_01'
+        testDates.forEach((testDate: Moment) => {
+            expect(isDateInDateRange(testDate, testDateRange)).toBe(false)
+        })
+    })
+    it('accepts list of dateRanges', (): void => {
+        const testDates: [Moment, boolean][] = [
+            [utc('2002_01_01', dateFormat), true],
+            [utc('1998_01_01', dateFormat), false],
+            [utc('2020_12_31', dateFormat), false],
+            [utc('2000_01_01', dateFormat), true],
+        ]
+        const testDateRange = '1998_12_31,1999_01_01-2001_01_01,2002_01_01'
+        testDates.forEach(([testDate, shouldPass]) => {
+            expect(isDateInDateRange(testDate, testDateRange)).toBe(shouldPass)
         })
     })
 })
