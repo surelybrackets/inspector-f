@@ -1,5 +1,5 @@
-import { getDateInYahooFinanceTime, generateYahooDataLink } from '../fetchData'
-import { getSavedDataFileName } from '../saveData'
+import { getDateInYahooFinanceTime, generateYahooDataLink, parseCSV, fetchTickerData } from '../fetchData'
+import axios from 'axios'
 import { utc, Moment } from 'moment'
 
 describe('getDateinYahooFinanceTime(date: Moment): number', (): void => {
@@ -48,5 +48,58 @@ describe('generateYahooDataLink(ticker: string, options?: YahooLinkOptions): str
             utc(),
         )}&interval=${interval}&events=history`
         expect(generateYahooDataLink(testTicker, { interval })).toBe(validationString)
+    })
+})
+
+describe('parseCSV(dataCSV: string): Promise<TickerInfo[]>', () => {
+    it('it returns csv string to json', async (): Promise<void> => {
+        const csv = 'Header1,Header2,Header3\n1,2,3\n4,5,6'
+        const expectedJson = [
+            {
+                Header1: '1',
+                Header2: '2',
+                Header3: '3',
+            },
+            {
+                Header1: '4',
+                Header2: '5',
+                Header3: '6',
+            },
+        ]
+        const json = await parseCSV(csv)
+        expect(json).toStrictEqual(expectedJson)
+    })
+})
+
+describe('fetchTickerData(ticker: string, options?: YahooLinkOptions): Promise<TickerInfo>', (): void => {
+    it('calls functions needs to produce ticker data in JSON[] format', async (): Promise<void> => {
+        const testLink = `https://query1.finance.yahoo.com/v7/finance/download/aapl?period1=0&period2=111111111&interval=1d&events=history`
+        const testResponse = {
+            data:
+                'Date,Open,High,Low,Close,Adj Close,Volume\n2020-04-09,30.280001,32.299999,29.809999,30.330000,30.330000,11335800',
+        }
+        const testData: TickerInfo = {
+            Date: '2020-04-09',
+            Open: '30.280001',
+            High: '32.299999',
+            Low: '29.809999',
+            Close: '30.330000',
+            'Adj Close': '30.330000',
+            Volume: '11335800',
+        }
+        // @ts-ignore
+        generateYahooDataLink = jest.fn(() => testLink)
+        // @ts-ignore
+        axios.get = jest.fn(async () => testResponse)
+        // @ts-ignore
+        parseCSV = jest.fn(async () => testData)
+
+        const testTicker = 'aapl'
+        const testOptions = { startDate: utc() }
+        const result = await fetchTickerData(testTicker, testOptions)
+        expect(generateYahooDataLink).toHaveBeenCalledWith(testTicker, testOptions)
+        expect(axios.get).toHaveBeenCalledWith(testLink, {})
+        expect(parseCSV).toHaveBeenCalledWith(testResponse.data)
+        expect(result).toStrictEqual(testData)
     })
 })
