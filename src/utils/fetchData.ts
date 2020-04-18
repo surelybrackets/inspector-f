@@ -4,7 +4,7 @@ import { getDateInYahooFinanceTime, validateDateRanges, getLatestDateInRange } f
 import {
     saveHistoricalTickerData,
     appendHistoricalTickerData,
-    isTickerDataSaved,
+    getSavedDataFileName,
     extractDateFromDataFilename,
     getDataFromFile,
 } from './saveData'
@@ -25,7 +25,7 @@ export const generateYahooDataLink = (ticker: string, options?: YahooLinkOptions
 type DataToLoad = { type: 'ALL' | 'PARTIAL' | 'NONE'; fileWriteDate?: Moment; dataFile?: string }
 
 export const isMoreDataNeeded = (ticker: string, dateRange?: string): DataToLoad => {
-    const dataFile = isTickerDataSaved(ticker)
+    const dataFile = getSavedDataFileName(ticker)
 
     if (dataFile) {
         const today: Moment = utc()

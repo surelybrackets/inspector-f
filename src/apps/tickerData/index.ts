@@ -1,5 +1,5 @@
 import express = require('express')
-import { getTickerData } from '../../utils/tickerDataUtils'
+import { getTickerData } from '../../utils/fetchData'
 
 const app = express()
 const basePath = '/ticker-data'

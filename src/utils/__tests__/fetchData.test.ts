@@ -1,8 +1,7 @@
-import { generateYahooDataLink, isMoreDataNeeded } from '../tickerDataUtils'
+import { generateYahooDataLink, isMoreDataNeeded } from '../fetchData'
 import { getDateInYahooFinanceTime } from '../dateUtils'
-import { isTickerDataSaved } from '../saveData'
+import { getSavedDataFileName } from '../saveData'
 import { utc } from 'moment'
-import { connect } from 'http2'
 
 describe('generateYahooDataLink(ticker: string, options?: YahooLinkOptions): string', (): void => {
     const testTicker = 'aapl'
@@ -43,12 +42,12 @@ describe(`isMoreDataNeeded(ticker: string, dateRange?: string): 'ALL' | DataToLo
     const testTicker = 'aapl'
     it(`returns 'ALL' if datafile for ticker does not exist`, (): void => {
         // @ts-ignore
-        isTickerDataSaved = jest.fn(() => undefined)
+        getSavedDataFileName = jest.fn(() => undefined)
         expect(isMoreDataNeeded(testTicker).type).toBe('ALL')
     })
     it(`throws Error if date provide is in the future`, (done): void => {
         // @ts-ignore
-        isTickerDataSaved = jest.fn(() => `${testTicker}${utc().format('YYYY_MM_DD')}.json`)
+        getSavedDataFileName = jest.fn(() => `${testTicker}${utc().format('YYYY_MM_DD')}.json`)
         const futureDate: string = utc().add(10, 'days').format('YYYY_MM_DD')
         try {
             isMoreDataNeeded(testTicker, futureDate)
@@ -62,7 +61,7 @@ describe(`isMoreDataNeeded(ticker: string, dateRange?: string): 'ALL' | DataToLo
         const pastDate = utc().subtract(10, 'days')
         const oldFile = `${testTicker}${pastDate.format('YYYY_MM_DD')}.json`
         // @ts-ignore
-        isTickerDataSaved = jest.fn(() => oldFile)
+        getSavedDataFileName = jest.fn(() => oldFile)
         const results = isMoreDataNeeded(testTicker)
         if (results.type !== 'ALL' && results.type !== 'NONE') {
             expect(results.dataFile).toBe(oldFile)
@@ -72,7 +71,7 @@ describe(`isMoreDataNeeded(ticker: string, dateRange?: string): 'ALL' | DataToLo
     it(`return 'NONE if ask date is earlier than most recent pull`, (): void => {
         const pastDate = utc().subtract(10, 'days').format('YYYY_MM_DD')
         // @ts-ignore
-        isTickerDataSaved = jest.fn(() => `${testTicker}${utc().format('YYYY_MM_DD')}.json`)
+        getSavedDataFileName = jest.fn(() => `${testTicker}${utc().format('YYYY_MM_DD')}.json`)
         expect(isMoreDataNeeded(testTicker, pastDate).type).toBe('NONE')
     })
 })
