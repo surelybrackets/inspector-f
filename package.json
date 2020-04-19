@@ -8,7 +8,9 @@
     "start:dev": "nodemon",
     "build": "tsc",
     "test": "jest --coverage",
-    "lint": "eslint ./src/**/*.ts"
+    "lint": "eslint ./src/**/*.ts",
+    "preversion": "npm run test",
+    "postversion": "git push --tags origin master"
   },
   "repository": {
     "type": "git",
