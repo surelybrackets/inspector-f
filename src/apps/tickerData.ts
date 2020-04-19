@@ -1,5 +1,5 @@
 import express = require('express')
-import TickerData from '../../parsers/TickerData'
+import TickerData from '../parsers/TickerData'
 
 const app = express()
 const basePath = '/ticker-data'
