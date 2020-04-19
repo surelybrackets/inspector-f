@@ -4,8 +4,10 @@
   "description": "API for getting historicall stock/etf statistics.",
   "main": "index.ts",
   "scripts": {
-    "start": "npm run build && node dist",
+    "start": "npm run build && npm run server-up",
     "start:dev": "nodemon",
+    "start:prod": "npm run build && docker-compose build && docker-compose up",
+    "server-up": "node dist",
     "build": "tsc",
     "test": "jest --coverage",
     "lint": "eslint ./src/**/*.ts",
