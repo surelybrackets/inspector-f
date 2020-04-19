@@ -9,16 +9,16 @@ import { fetchTickerData } from '../utils/fetchData'
 import { validateDateRanges, isDateInDateRange, dateFormat } from '../utils/dateUtils'
 
 export default class TickerData {
-    private _ticker: string
     private _data: TickerInfo[]
-    private _initializeDate: Moment
     private _lastPull: Moment | undefined
+    private _ticker: string
+    private _initializeDate: Moment
 
     static dateFormat: 'YYYY_MM_DD'
 
     constructor(ticker: string) {
         this._ticker = ticker
-        this._initializeDate = utc(utc(), TickerData.dateFormat)
+        this._initializeDate = utc()
 
         const dataFile: string = getSavedDataFileName(ticker)
 
@@ -30,8 +30,28 @@ export default class TickerData {
         }
     }
 
+    /* getters */
+
+    public get data(): TickerInfo[] {
+        return this._data
+    }
+
+    public get lastPull(): Moment | undefined {
+        return this._lastPull
+    }
+
+    public get ticker(): string {
+        return this._ticker
+    }
+
+    public get initializeDate(): Moment {
+        return this._initializeDate
+    }
+
+    /* methods */
+
     public isSynced(): boolean {
-        return this._lastPull && this._initializeDate.diff(this._lastPull, 'days') === 0
+        return !!this._lastPull && this._initializeDate.diff(this._lastPull, 'days') === 0
     }
 
     public async refreshData(): Promise<TickerInfo[]> {
