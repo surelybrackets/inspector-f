@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && npm run server-up",
     "start:dev": "nodemon",
-    "start:prod": "npm run build && docker-compose build && docker-compose up",
+    "start:prod": "npm run build && docker-compose build && docker-compose up -d",
     "server-up": "node dist",
     "build": "tsc",
     "test": "jest --coverage",
