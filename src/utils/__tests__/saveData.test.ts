@@ -1,5 +1,6 @@
 import {
     dataRoute,
+    generateDataDirectory,
     getSavedDataList,
     getSavedDataFileName,
     getDataFromFile,
@@ -25,8 +26,9 @@ const testData: TickerInfo = {
     'Adj Close': '30.330000',
     Volume: '11335800',
 }
+
 beforeAll((): void => {
-    fs.mkdirSync(dataRoute)
+    generateDataDirectory()
     testFiles.forEach((file: string) => {
         fs.writeFileSync(`${dataRoute}/${file}`, JSON.stringify([testData]))
     })
@@ -37,6 +39,29 @@ afterAll((): void => {
         fs.unlinkSync(`${dataRoute}/${item}`)
     })
     fs.rmdirSync(dataRoute)
+})
+
+describe('generateDataDirectory(): void', (): void => {
+    let saveMkdirSync
+    beforeAll((): void => {
+        saveMkdirSync = fs.mkdirSync
+        fs.mkdirSync = jest.fn()
+    })
+    afterAll((): void => {
+        fs.mkdirSync = saveMkdirSync
+    })
+    it('creates data directory, if does not exist', (): void => {
+        const saveExistsSync = fs.existsSync
+        fs.existsSync = jest.fn(() => false)
+        generateDataDirectory()
+        expect(fs.mkdirSync).toHaveBeenCalledWith(dataRoute)
+        fs.existsSync = saveExistsSync
+    })
+    it('does not make data directory if already exists', (): void => {
+        fs.mkdirSync = jest.fn()
+        generateDataDirectory()
+        expect(fs.mkdirSync).not.toHaveBeenCalled()
+    })
 })
 
 describe('getSavedDataList(): string[]', (): void => {

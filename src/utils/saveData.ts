@@ -4,7 +4,12 @@ import fs = require('fs')
 
 export const dataRoute = 'data'
 
+export const generateDataDirectory = (): void => {
+    if (!fs.existsSync(dataRoute)) fs.mkdirSync(dataRoute)
+}
+
 export const getSavedDataList = (): string[] => {
+    generateDataDirectory()
     return fs.readdirSync(dataRoute)
 }
 
@@ -14,11 +19,13 @@ export const getSavedDataFileName = (ticker: string): string | undefined => {
 }
 
 export const getDataFromFile = (file: string): TickerInfo[] => {
+    generateDataDirectory()
     const oldData: string = fs.readFileSync(`${dataRoute}/${file}`, 'utf8')
     return JSON.parse(oldData)
 }
 
 export const saveHistoricalTickerData = (ticker: string, data: TickerInfo[]): TickerInfo[] => {
+    generateDataDirectory()
     const todayString: string = utc().format('YYYY_MM_DD')
 
     const oldDataFile: string = getSavedDataFileName(ticker)
