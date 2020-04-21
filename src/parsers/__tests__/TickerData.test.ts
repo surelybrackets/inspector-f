@@ -80,7 +80,7 @@ describe('TickerData.refreshDate(): Promise<TickerInfo[]>', () => {
     })
     it('returns stored data + fetched data if out of sync', async (): Promise<void> => {
         const tickerData: TickerData = new TickerData(testTicker)
-        tickerData.isSynced = jest.fn(() => true)
+        tickerData.isSynced = jest.fn(() => false)
         // @ts-ignore
         extractDateFromDataFilename = jest.fn(() => testDate)
         expect(tickerData.lastPull.diff(today, 'days')).toBeLessThan(0)
