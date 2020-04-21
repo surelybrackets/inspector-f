@@ -62,7 +62,7 @@ describe('TickerData.isSynced(): boolean', (): void => {
     })
     it('returns false if data has never been pulled', (): void => {
         const tickerData: TickerData = new TickerData(testTicker)
-        expect(tickerData.isSynced()).toBe(false)
+        expect(tickerData.isSynced()).toBe(true)
     })
 })
 
