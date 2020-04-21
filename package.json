@@ -4,6 +4,7 @@
   "description": "API for getting historicall stock/etf statistics.",
   "main": "index.ts",
   "scripts": {
+    "init": "npm i & git config git config core.hooksPath hooks",
     "start": "npm run build && npm run server-up",
     "start:dev": "nodemon",
     "start:prod": "npm run build && docker-compose build && docker-compose up -d",
