@@ -67,7 +67,7 @@ export default class TickerData {
         return this._data
     }
 
-    public filter(dateRange?: string): TickerInfo[] {
+    public filterData(dateRange?: string): TickerInfo[] {
         if (dateRange) {
             if (validateDateRanges(dateRange)) {
                 return this._data.filter((day: TickerInfo): boolean => {
@@ -78,6 +78,21 @@ export default class TickerData {
             }
         } else {
             return this._data
+        }
+    }
+
+    public filterIndexes(dateRange?: string): number[] {
+        if (dateRange) {
+            if (validateDateRanges(dateRange)) {
+                return this._data.reduce((acc: number[], day: TickerInfo, index: number): number[] => {
+                    if (isDateInDateRange(utc(day.Date, dateFormat), dateRange)) acc.push(index)
+                    return acc
+                }, [])
+            } else {
+                throw new Error('Invalid dateString.')
+            }
+        } else {
+            return [...Array<number>(this._data.length).keys()]
         }
     }
 }

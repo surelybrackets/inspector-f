@@ -8,7 +8,6 @@ import {
 import { dateFormat, validateDateRanges, isDateInDateRange } from '../../utils/dateUtils'
 import { fetchTickerData } from '../../utils/fetchData'
 import { utc, Moment } from 'moment'
-import { tickerData } from '../../apps'
 
 const testTicker = 'aapl'
 const testData: TickerInfo = {
@@ -22,6 +21,45 @@ const testData: TickerInfo = {
 }
 const today: Moment = utc()
 const testDate: Moment = utc('2020_01_01', dateFormat)
+
+const testDataset = [
+    {
+        Date: '2019-05-10',
+        Open: '42.000000',
+        High: '45.000000',
+        Low: '41.060001',
+        Close: '41.570000',
+        'Adj Close': '41.570000',
+        Volume: '186322500',
+    },
+    {
+        Date: '2019-05-13',
+        Open: '38.790001',
+        High: '39.240002',
+        Low: '36.080002',
+        Close: '37.099998',
+        'Adj Close': '37.099998',
+        Volume: '79442400',
+    },
+    {
+        Date: '2019-05-14',
+        Open: '38.310001',
+        High: '39.959999',
+        Low: '36.849998',
+        Close: '39.959999',
+        'Adj Close': '39.959999',
+        Volume: '46661100',
+    },
+    {
+        Date: '2019-05-15',
+        Open: '39.369999',
+        High: '41.880001',
+        Low: '38.950001',
+        Close: '41.290001',
+        'Adj Close': '41.290001',
+        Volume: '36086100',
+    },
+]
 
 beforeEach((): void => {
     // @ts-ignore
@@ -95,59 +133,21 @@ describe('TickerData.refreshDate(): Promise<TickerInfo[]>', () => {
     })
 })
 
-describe('TickerData.filter(dateRange?: string): TickerInfo[]', (): void => {
-    const testDataset = [
-        {
-            Date: '2019-05-10',
-            Open: '42.000000',
-            High: '45.000000',
-            Low: '41.060001',
-            Close: '41.570000',
-            'Adj Close': '41.570000',
-            Volume: '186322500',
-        },
-        {
-            Date: '2019-05-13',
-            Open: '38.790001',
-            High: '39.240002',
-            Low: '36.080002',
-            Close: '37.099998',
-            'Adj Close': '37.099998',
-            Volume: '79442400',
-        },
-        {
-            Date: '2019-05-14',
-            Open: '38.310001',
-            High: '39.959999',
-            Low: '36.849998',
-            Close: '39.959999',
-            'Adj Close': '39.959999',
-            Volume: '46661100',
-        },
-        {
-            Date: '2019-05-15',
-            Open: '39.369999',
-            High: '41.880001',
-            Low: '38.950001',
-            Close: '41.290001',
-            'Adj Close': '41.290001',
-            Volume: '36086100',
-        },
-    ]
+describe('TickerData.filterData(dateRange?: string): TickerInfo[]', (): void => {
     beforeEach((): void => {
         // @ts-ignore
         getDataFromFile = jest.fn(() => testDataset)
     })
     it('returns unfiltered data if not give a dateRange string', (): void => {
         const tickerData: TickerData = new TickerData(testTicker)
-        expect(tickerData.filter()).toStrictEqual(testDataset)
+        expect(tickerData.filterData()).toStrictEqual(testDataset)
     })
     it('throws error if provide dateRange is invalid', (done): void => {
         // @ts-ignore
         validateDateRanges = jest.fn(() => false)
         const tickerData: TickerData = new TickerData(testTicker)
         try {
-            tickerData.filter('2020_01_01')
+            tickerData.filterData('2020_01_01')
             done.fail()
         } catch {
             done()
@@ -162,7 +162,7 @@ describe('TickerData.filter(dateRange?: string): TickerInfo[]', (): void => {
             return day.diff(utc(filterDate, dateFormat), 'days') === 0
         })
         const tickerData: TickerData = new TickerData(testTicker)
-        expect(tickerData.filter(filterDate)).toStrictEqual([
+        expect(tickerData.filterData(filterDate)).toStrictEqual([
             {
                 Date: '2019-05-14',
                 Open: '38.310001',
@@ -173,5 +173,38 @@ describe('TickerData.filter(dateRange?: string): TickerInfo[]', (): void => {
                 Volume: '46661100',
             },
         ])
+    })
+})
+
+describe('TickerData:filterIndexes(dateRange?: string): number[]', (): void => {
+    beforeEach((): void => {
+        // @ts-ignore
+        getDataFromFile = jest.fn(() => testDataset)
+    })
+    it('returns indexes of all data if not give a dateRange string', (): void => {
+        const tickerData: TickerData = new TickerData(testTicker)
+        expect(tickerData.filterIndexes()).toStrictEqual([0, 1, 2, 3])
+    })
+    it('throws error if provide dateRange is invalid', (done): void => {
+        // @ts-ignore
+        validateDateRanges = jest.fn(() => false)
+        const tickerData: TickerData = new TickerData(testTicker)
+        try {
+            tickerData.filterIndexes('2020_01_01')
+            done.fail()
+        } catch {
+            done()
+        }
+    })
+    it('filters data according to isDateInDateRange if given valid dateRange', (): void => {
+        const filterDate = '2019_05_14'
+        // @ts-ignore
+        validateDateRanges = jest.fn(() => true)
+        // @ts-ignore
+        isDateInDateRange = jest.fn((day: Moment): boolean => {
+            return day.diff(utc(filterDate, dateFormat), 'days') === 0
+        })
+        const tickerData: TickerData = new TickerData(testTicker)
+        expect(tickerData.filterIndexes(filterDate)).toStrictEqual([2])
     })
 })
