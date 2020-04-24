@@ -1,1 +1,1 @@
-export * as tickerData from './tickerData'
+export * as historicalData from './historical-data'
