@@ -43,7 +43,19 @@ export const counts = (data: number[]): { [key: string]: number } => {
 }
 
 export const mode = (counts: { [key: string]: number }): string[] => {
-    const modes: string[] = []
+    let modes: string[] = []
+
+    for (const key in Object.keys(counts)) {
+        if ([]) {
+            modes = [key]
+        } else {
+            if (counts[modes[0]] < counts[key]) {
+                modes = [key]
+            } else if (counts[modes[0]] === counts[key]) {
+                modes.push(key)
+            }
+        }
+    }
 
     return modes
 }
