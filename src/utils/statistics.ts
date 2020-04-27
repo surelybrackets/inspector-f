@@ -50,11 +50,9 @@ export const mode = (data: number[], cnts?: { [key: string]: number }): string[]
         if (!modes) {
             modes = [key]
         } else {
-            console.log(cnts[modes[0]])
-            console.log(cnts[key])
             if (cnts[modes[0]] < cnts[key]) {
                 modes = [key]
-            } else if (counts[modes[0]] === cnts[key]) {
+            } else if (cnts[modes[0]] === cnts[key]) {
                 modes.push(key)
             }
         }
