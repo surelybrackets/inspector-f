@@ -56,13 +56,18 @@ export default class TickerData {
 
     public async refreshData(): Promise<TickerInfo[]> {
         if (!this.isSynced()) {
-            const freshData: TickerInfo[] = await fetchTickerData(this._ticker, {
-                startDate: this._lastPull,
-                endDate: this._initializeDate,
-            })
-            this._data = this._data.concat(freshData)
+            try {
+                const freshData: TickerInfo[] = await fetchTickerData(this._ticker, {
+                    startDate: this._lastPull,
+                    endDate: this._initializeDate,
+                })
+                this._data = this._data.concat(freshData)
+                saveHistoricalTickerData(this._ticker, this._data)
+            } catch (e) {
+                if (e.response.data !== '404 Not Found: Timestamp data missing.')
+                    throw new Error('500 Internal Server error.')
+            }
             this._lastPull = this._initializeDate
-            saveHistoricalTickerData(this._ticker, this._data)
         }
         return this._data
     }

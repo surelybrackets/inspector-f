@@ -42,20 +42,34 @@ export const counts = (data: number[]): { [key: string]: number } => {
     return sortedCounts
 }
 
-export const mode = (counts: { [key: string]: number }): string[] => {
-    let modes: string[] = []
+export const mode = (data: number[], cnts?: { [key: string]: number }): string[] => {
+    cnts = cnts ? cnts : counts(data)
+    let modes: string[] = undefined
 
-    for (const key in Object.keys(counts)) {
-        if ([]) {
+    for (const key of Object.keys(cnts)) {
+        if (!modes) {
             modes = [key]
         } else {
-            if (counts[modes[0]] < counts[key]) {
+            console.log(cnts[modes[0]])
+            console.log(cnts[key])
+            if (cnts[modes[0]] < cnts[key]) {
                 modes = [key]
-            } else if (counts[modes[0]] === counts[key]) {
+            } else if (counts[modes[0]] === cnts[key]) {
                 modes.push(key)
             }
         }
     }
 
     return modes
+}
+
+export const std = (data: number[], mu?: number): number => {
+    mu = mu ? mu : mean(data)
+
+    const variance =
+        data.reduce(function (sq, n) {
+            return sq + Math.pow(n - mu, 2)
+        }, 0) /
+        (data.length - 1)
+    return Math.sqrt(variance)
 }
