@@ -1,7 +1,15 @@
+/**
+ * Determines the average(mean) of a set of numbers.
+ * @param data A set of numbers as an array
+ */
 export const mean = (data: number[]): number => {
     return data.reduce((prev: number, next: number): number => prev + next, 0) / data.length
 }
 
+/**
+ * Determines the median of a set of numbers.
+ * @param data A set of numbers as an array
+ */
 export const median = (data: number[]): number => {
     data.sort((left: number, right: number): number => left - right)
     if (data.length % 2 === 1) {
@@ -11,10 +19,23 @@ export const median = (data: number[]): number => {
     }
 }
 
+/**
+ * Determines the minimum value of a set of numbers.
+ * @param data A set numbers as an array
+ */
 export const min = (data: number[]): number => Math.min(...data)
 
+/**
+ * Determines the maximum value of a set of numbers.
+ * @param data A set of numbers as an array
+ */
 export const max = (data: number[]): number => Math.max(...data)
 
+/**
+ * Counts the occurences of values in a set, placed in buckets of length b <= x < b + 1.
+ * (ie. if x=4.5, it will be stored in bucket b=4)
+ * @param data A set of numbers as an array
+ */
 export const counts = (data: number[]): { [key: string]: number } => {
     const counts: { [key: string]: number } = data.reduce((acc: { [key: string]: number }, datum: number): {
         [key: string]: number
@@ -42,6 +63,13 @@ export const counts = (data: number[]): { [key: string]: number } => {
     return sortedCounts
 }
 
+/**
+ * Returns an array of bucket keys, which include the most occurences. This function is
+ * based off count objects, which are returned from counts().
+ * @param data A set of numbers as an array
+ * @param cnts An optional count object for use in calculation. This will skip internal
+ * count calculation, which can improve effeciency if counts have been calculated elsewhere.
+ */
 export const mode = (data: number[], cnts?: { [key: string]: number }): string[] => {
     cnts = cnts ? cnts : counts(data)
     let modes: string[] = undefined
@@ -61,6 +89,12 @@ export const mode = (data: number[], cnts?: { [key: string]: number }): string[]
     return modes
 }
 
+/**
+ * Determines the standard deviation of a set of numbers.
+ * @param data A set of numbers as an array
+ * @param ma An optional avg(mean) parameter. Using this parameter will skip internal
+ * mean caculations, potentially improving performance if mean was calculated elsewhere.
+ */
 export const std = (data: number[], mu?: number): number => {
     mu = mu ? mu : mean(data)
 
