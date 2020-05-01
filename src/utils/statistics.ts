@@ -52,7 +52,6 @@ export const counts = (data: number[]): { [key: string]: number } => {
         const bTrueVal = bSign === '+' ? parseInt(bVal) : -1 * parseInt(bVal)
         if (aTrueVal > bTrueVal) return -1
         else if (aTrueVal < bTrueVal) return 1
-        return 0
     })
 
     const sortedCounts: { [key: string]: number } = {}
@@ -96,11 +95,11 @@ export const mode = (data: number[], cnts?: { [key: string]: number }): string[]
  * mean caculations, potentially improving performance if mean was calculated elsewhere.
  */
 export const std = (data: number[], mu?: number): number => {
-    mu = mu ? mu : mean(data)
+    mu = typeof mu === 'number' ? mu : mean(data)
 
     const variance =
-        data.reduce(function (sq, n) {
-            return sq + Math.pow(n - mu, 2)
+        data.reduce((acc: number, x: number) => {
+            return acc + Math.pow(x - mu, 2)
         }, 0) /
         (data.length - 1)
     return Math.sqrt(variance)
