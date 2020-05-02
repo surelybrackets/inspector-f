@@ -32,7 +32,7 @@ To run a hot reloading development server, run:
 npm run start:dev
 ```
 
-To run the server in a detach docker container, run (this requires docker to be installed):
+To run the server in a detach docker container, run (this requires docker and docker-compose to be installed):
 ```sh
 npm run start:prod
 ```
