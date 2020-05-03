@@ -83,3 +83,7 @@ data
 
 # vscode
 .vscode
+
+# terraform state
+.terraform/
+*.tfstate*
