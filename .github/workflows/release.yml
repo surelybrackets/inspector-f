@@ -7,7 +7,7 @@ env:
   TERRAFORM_VERSION: "0.12.15"
 
 jobs:
-  deploy:••••••••••••••
+  deploy:
     name: Deploy
     runs-on: ubuntu-latest
     strategy:
