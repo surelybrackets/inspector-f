@@ -1,7 +1,8 @@
 name: Push to Docker Hub on Release
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - "v*"
 
 jobs:
   deploy:
