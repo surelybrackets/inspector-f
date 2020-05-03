@@ -22,8 +22,8 @@ jobs:
         
     - name: Install and Config Terraform
       run: |
-        wget https://releases.hashicorp.com/terraform/${{ TERRAFORM_VERSION }}/terraform_${{ TERRAFORM_VERSION }}_linux_amd64.zip
-        unzip terraform_${{ TERRAFORM_VERSION }}_linux_amd64.zip
+        wget https://releases.hashicorp.com/terraform/${{ env.TERRAFORM_VERSION }}/terraform_${{ env.TERRAFORM_VERSION }}_linux_amd64.zip
+        unzip terraform_${{ env.TERRAFORM_VERSION }}_linux_amd64.zip
         sudo mv terraform /usr/local/bin/
         terraform -v
 
