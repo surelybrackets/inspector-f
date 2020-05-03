@@ -22,7 +22,7 @@ jobs:
       run: npm ci 
       
     - name: Build and start Container
-      run: npm run start:prodname
+      run: npm run start:prod
     
     - name: Publish to Registry
       run: |
