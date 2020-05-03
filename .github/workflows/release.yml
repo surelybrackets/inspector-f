@@ -13,18 +13,18 @@ jobs:
 
     steps:
     - name: Checkout Branch
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
       with:
         node-version: ${{ matrix.node-version }}
 
     - name: Install Dependencies
-    - run: npm ci
+      run: npm ci 
       
     - name: Build and start Container
-    - run: npm run start:prodname
+      run: npm run start:prodname
     
     - name: Publish to Registry
-    - run: |
+      run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker tag inspector-f ${{ secrets.DOCKER_USERNAME }}/inspector-f
         docker push ${{ secrets.DOCKER_USERNAME }}/inspector-f
