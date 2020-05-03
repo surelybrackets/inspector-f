@@ -6,10 +6,6 @@ variable "aws_secret_access_key" {
   type = "string"
 }
 
-variable "docker_username" {
-  type = "string"
-}
-
 variable "docker_tag_version" {
   type = "string"
 }
