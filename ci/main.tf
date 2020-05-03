@@ -40,7 +40,7 @@ resource "aws_instance" "api_host" {
     "Amazon ECS-Optimized Amazon Linux 2 AMI-2-0-20200430-AutogenByAWSMP-2",
     "Amazon ECS-Optimized Amazon Linux 2 AMI-2-0-20200430-AutogenByAWSMP-1"
   ]
-  tags {
+  tags = {
     name = "${local.repo_name}-${var.docker_tag_version}-${local.init_time}"
   }
 }
