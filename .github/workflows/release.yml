@@ -1,10 +1,11 @@
-name: Push to Docker Hub on Release
+name: On New Version Create Contanier and Run on new EC2
 on:
   push:
     tags:
       - "v*"
 env:
   TERRAFORM_VERSION: "0.12.15"
+  REPO_NAME: "inspector-f"
 
 jobs:
   deploy:
@@ -30,14 +31,14 @@ jobs:
     - name: Install Node Dependencies
       run: npm ci
       
-    - name: Build and start Container
+    - name: Build and start Containerec2-35-170-243-128.compute-1.amazonaws.com
       run: npm run start:prod
     
     - name: Publish to Registry
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker tag inspector-f ${{ secrets.DOCKER_USERNAME }}/inspector-f
-        docker push ${{ secrets.DOCKER_USERNAME }}/inspector-f
+        docker tag inspector-f ${{ secrets.DOCKER_USERNAME }}/${{ env.REPO_NAME }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.REPO_NAME }}
     
     - name: Create New EC2 Instance
       run: |
@@ -45,3 +46,10 @@ jobs:
         terraform init
         terraform validate
         terraform apply -auto-approve -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var "docker_tag_version=$(echo $(git tag))"
+
+    - name: Start API
+      run: |
+        INSTANCE_DNS=$(terraform output)
+        ssh -i ${{ secrets.EC2_DEPLOY_KEY }} ec2-user@$INSTANCE_DNS
+        docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/${{ env.REPO_NAME }}
+  
