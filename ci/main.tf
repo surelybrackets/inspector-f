@@ -40,3 +40,8 @@ resource "aws_instance" "api_host" {
     name = "${local.repo_name}-${var.docker_tag_version}-${local.init_time}"
   }
 }
+
+output "instance_dns" {
+  value = "${aws_instance.api_host.public_dns}"
+}
+
