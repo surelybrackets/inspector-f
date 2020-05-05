@@ -84,6 +84,8 @@ data
 # vscode
 .vscode
 
-# terraform state
+# terraform
 .terraform/
 *.tfstate*
+*.tfvars
+
