@@ -6,7 +6,6 @@ provider "aws" {
 
 locals {
   repo_name = "inspector-f"
-  init_time = timestamp()
 }
 
 resource "aws_instance" "api_host" {
@@ -18,7 +17,9 @@ resource "aws_instance" "api_host" {
     "bunch43-sg-ec2-express-api"
   ]
   tags = {
-    name = "${local.repo_name}-${var.docker_tag_version}-${local.init_time}"
+    name = "${local.repo_name}-${var.docker_tag_version}"
+    version = var.docker_tag_version
+    timestamp = timestamp()
   }
 }
 
