@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run -p 8080:8080 bunch43/inspector-f
+docker run -p 8080:80 bunch43/inspector-f
