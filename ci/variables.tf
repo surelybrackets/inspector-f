@@ -10,6 +10,10 @@ variable "docker_tag_version" {
   type = string
 }
 
+variable "docker_repo" {
+  type = string
+}
+
 variable "aws_region" {
   type = string
   default = "us-east-1"

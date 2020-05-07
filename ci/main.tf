@@ -8,11 +8,18 @@ locals {
   repo_name = "inspector-f"
 }
 
+data "template_file" "init" {
+  template = file("scripts/init.tpl")
+  vars = {
+    repo = var.docker_repo
+  }
+}
+
 resource "aws_instance" "api_host" {
   ami = "ami-0aee8ced190c05726"
   instance_type = "t2.micro"
   key_name = "inspector-f"
-  user_data = file("scripts/init")
+  user_data = data.template_file.init.rendered
   security_groups = [
     "bunch43-sg-ec2-express-api"
   ]
