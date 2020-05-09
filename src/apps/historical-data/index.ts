@@ -4,7 +4,7 @@ import TickerData from '../../parsers/TickerData'
 const app = express()
 const basePath = '/historical-data'
 
-app.get(`/:ticker`, async (req, res) => {
+app.get(`${basePath}/:ticker`, async (req, res) => {
     try {
         const tickerData = new TickerData(req.params.ticker)
         await tickerData.refreshData()
@@ -16,4 +16,3 @@ app.get(`/:ticker`, async (req, res) => {
 })
 
 module.exports.app = app
-module.exports.basePath = basePath

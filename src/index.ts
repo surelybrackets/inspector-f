@@ -1,14 +1,14 @@
 import express = require('express')
 import * as apps from './apps'
 
-const router = express()
+const api = express()
 const PORT = 8080
 
 Object.keys(apps).forEach((appName) => {
-    const { app, basePath } = apps[appName]
-    router.use(basePath, app)
+    const { app } = apps[appName]
+    api.use(app)
 })
 
-router.listen(PORT, () => {
+api.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`)
 })
