@@ -1,6 +1,6 @@
 {
   "name": "inspector-f",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "description": "API for getting historicall stock/etf statistics.",
   "main": "index.ts",
   "scripts": {
