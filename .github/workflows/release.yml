@@ -45,6 +45,13 @@ jobs:
         cd ci
         terraform init
         terraform validate
-        terraform apply -auto-approve -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var "docker_tag_version=$(echo $(git tag))" -var "docker_repo=${{ secrets.DOCKER_USERNAME }}"
+        terraform apply -auto-approve \
+          -var "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+          -var "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
+          -var "docker_tag_version=$(echo $(git tag))" \
+          -var "docker_repo=${{ secrets.DOCKER_USERNAME }}" \
+          -var "dns_user=${{ secrets.DNS_USERNAME }}" \
+          -var "dns_login=${{ secrets.DNS_PASSWORD }}"
+        echo "API is now running at 'http://finspector.hopto.com/'"
 
   
