@@ -1,18 +1,12 @@
 import express = require('express')
-import TickerData from '../../parsers/TickerData'
+import * as routes from './routes'
 
 const app = express()
-const basePath = '/historical-data'
+const appPath = '/historical-data'
 
-app.get(`${basePath}/:ticker`, async (req, res) => {
-    try {
-        const tickerData = new TickerData(req.params.ticker)
-        await tickerData.refreshData()
-        res.send(tickerData.filterData(req.query.dateRange as string))
-    } catch (err) {
-        // console.error(err)
-        res.send(err.message)
-    }
+Object.keys(routes).forEach((rt): void => {
+    const { route } = routes[rt]
+    app.use(appPath, route)
 })
 
 module.exports.app = app
