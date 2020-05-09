@@ -12,6 +12,8 @@ data "template_file" "init" {
   template = file("scripts/init.tpl")
   vars = {
     repo = var.docker_repo
+    dns_user = var.dns_user
+    dns_login = var.dns_login
   }
 }
 

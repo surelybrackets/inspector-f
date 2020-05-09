@@ -14,6 +14,14 @@ variable "docker_repo" {
   type = string
 }
 
+variable "dns_user" {
+  type = string
+}
+
+variable "dns_login" {
+  type = string
+}
+
 variable "aws_region" {
   type = string
   default = "us-east-1"
