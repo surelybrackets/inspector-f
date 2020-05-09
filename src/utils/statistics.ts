@@ -51,7 +51,7 @@ export const counts = (data: number[]): { [key: string]: number } => {
         const aTrueVal = aSign === '+' ? parseInt(aVal) : -1 * parseInt(aVal)
         const bTrueVal = bSign === '+' ? parseInt(bVal) : -1 * parseInt(bVal)
         if (aTrueVal > bTrueVal) return -1
-        else if (aTrueVal < bTrueVal) return 1
+        else if (aTrueVal <= bTrueVal) return 1
     })
 
     const sortedCounts: { [key: string]: number } = {}
@@ -103,4 +103,16 @@ export const std = (data: number[], mu?: number): number => {
         }, 0) /
         (data.length - 1)
     return Math.sqrt(variance)
+}
+
+/**
+ * Determines the standard error of a set of numbers.
+ * @param data A set of number as an array
+ * @param s An optional standard deviation parameter. Using this parameter will skip internal
+ * standard deviation calculations, potentially improving performance if std calculated elsewhere.
+ */
+export const sterr = (data: number[], s?: number): number => {
+    s = typeof s === 'number' ? s : std(data)
+
+    return s / Math.sqrt(data.length)
 }

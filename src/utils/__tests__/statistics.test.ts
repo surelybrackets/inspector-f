@@ -1,4 +1,4 @@
-import { mean, median, min, max, counts, mode, std } from '../statistics'
+import { mean, median, min, max, counts, mode, std, sterr } from '../statistics'
 
 const evenTestSet = [-5, -4, -3, -2, -2, -1, -0.5, 0, 0, 0.5, 1, 2, 2, 3, 4, 5]
 const oddTestSet = [-5, -2, 2, 2, 3, -1, -0.5, 0, 0.5, 1, 4, 5, -4, -3, -2]
@@ -84,5 +84,18 @@ describe('std(data: number[], mu?: number): number', (): void => {
         mean = jest.fn(() => mu)
         expect(std(evenTestSet, mu)).toBe(2.8106938645110393)
         expect(mean).not.toHaveBeenCalled()
+    })
+})
+
+describe('sterr(data: number[], s?: number): number', (): void => {
+    it('returns standard err of a set of numbers', (): void => {
+        expect(sterr(evenTestSet)).toBe(0.7026734661277598)
+    })
+    it('returns standard deviation of set of numbers, with provided mean', (): void => {
+        const s = std(evenTestSet)
+        // @ts-ignore
+        std = jest.fn(() => s)
+        expect(sterr(evenTestSet, s)).toBe(0.7026734661277598)
+        expect(std).not.toHaveBeenCalled()
     })
 })

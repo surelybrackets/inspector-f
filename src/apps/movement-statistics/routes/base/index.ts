@@ -1,6 +1,6 @@
 import express = require('express')
 import TickerData from '../../../../parsers/TickerData'
-import { mean, median, mode, counts, min, max, std } from '../../../../utils/statistics'
+import { mean, median, mode, counts, min, max, std, sterr } from '../../../../utils/statistics'
 import * as swaggerUI from 'swagger-ui-express'
 import docs from './swagger'
 
@@ -14,6 +14,7 @@ interface MovementTracker {
     max: number
     min: number
     std: number
+    sterr: number
     counts: { [key: string]: number }
 }
 
@@ -41,6 +42,7 @@ route.get(`${routePath}/:ticker`, async (req, res) => {
             max: max(percMoves),
             min: min(percMoves),
             std: std(percMoves),
+            sterr: sterr(percMoves),
             counts: counts(percMoves),
         }
         res.send(statistics)
