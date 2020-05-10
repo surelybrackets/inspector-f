@@ -1,0 +1,16 @@
+{
+  "name": "@surelybrackets/f-inspector-utils",
+  "version": "0.6.12-dev.1",
+  "description": "Utility functions for f-inspector",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Bunch (bunch43@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "0.19.2",
+    "csvtojson": "2.0.10",
+    "moment": "2.24.0"
+  }
+}
