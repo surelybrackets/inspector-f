@@ -23,7 +23,7 @@ export default class TickerData {
         const dataFile: string = getSavedDataFileName(ticker)
 
         if (dataFile) {
-            this._data = getDataFromFile(dataFile)
+            this._data = getDataFromFile<TickerInfo>(dataFile)
             this._lastPull = extractDateFromDataFilename(dataFile)
         } else {
             this._data = []
@@ -64,7 +64,7 @@ export default class TickerData {
                 this._data = this._data.concat(freshData)
                 saveHistoricalTickerData(this._ticker, this._data)
             } catch (e) {
-                if (e.response.data !== '404 Not Found: Timestamp data missing.')
+                if (e.response && e.response.data !== '404 Not Found: Timestamp data missing.')
                     throw new Error('500 Internal Server error.')
             }
             this._lastPull = this._initializeDate

@@ -2,6 +2,10 @@ import { utc, Moment } from 'moment'
 
 export const dateFormat = 'YYYY_MM_DD'
 
+/**
+ * Validates that the provided date string matches format YYYY_MM_DD.
+ * @param dateString A date in the format YYYY_MM_DD
+ */
 export const validateDateString = (dateString: string): boolean => {
     const acceptedCharacters = ['_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     if (dateString.length !== 10) return false
@@ -17,6 +21,10 @@ export const validateDateString = (dateString: string): boolean => {
     return true
 }
 
+/**
+ * Validates a range of date is a single date string or a range in the format YYYY_MM_DD.
+ * @param range A date range in the format YYYY_MM_DD-YYYY_MM_DD or single date YYYY_MM_DD
+ */
 export const validateRange = (range: string): boolean => {
     if (range.includes('-')) {
         const splitRange = range.split('-')
@@ -32,6 +40,10 @@ export const validateRange = (range: string): boolean => {
     }
 }
 
+/**
+ * Validates that each item in a date range list is a valid date range.
+ * @param dateRanges A list of date ranges as a string
+ */
 export const validateDateRanges = (dateRanges: string): boolean => {
     const ranges = dateRanges.split(',')
 
@@ -41,6 +53,10 @@ export const validateDateRanges = (dateRanges: string): boolean => {
     return true
 }
 
+/**
+ * Gets the latest date that occurs in a date range list.
+ * @param dateRange A list of date ranges as a string
+ */
 export const getLatestDateInRange = (dateRange: string): Moment => {
     const ranges: string[] = dateRange.split(',')
     let lastestDate = utc('1800_01_01', 'YYYY_MM_DD')
@@ -54,6 +70,11 @@ export const getLatestDateInRange = (dateRange: string): Moment => {
     return lastestDate
 }
 
+/**
+ * Determines if 'date' exists inside of 'dateRange'.
+ * @param date A date
+ * @param dateRange A list of date ranges
+ */
 export const isDateInDateRange = (date: Moment, dateRange: string): boolean => {
     for (const range of dateRange.split(',')) {
         if (range.includes('-')) {

@@ -104,7 +104,7 @@ describe('TickerData.isSynced(): boolean', (): void => {
     })
 })
 
-describe('TickerData.refreshDate(): Promise<TickerInfo[]>', () => {
+describe('TickerData.refreshData(): Promise<TickerInfo[]>', () => {
     beforeEach((): void => {
         // @ts-ignore
         fetchTickerData = jest.fn(async () => [testData, testData])
