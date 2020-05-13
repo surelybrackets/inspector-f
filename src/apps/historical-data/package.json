@@ -1,0 +1,11 @@
+{
+  "name": "@surelybrackets/f-inspector-historical-data",
+  "version": "0.6.12",
+  "description": "Express Api returning historical closing data for stocks.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Bunch (bunch43@gmail.com)",
+  "license": "ISC"
+}

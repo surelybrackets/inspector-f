@@ -1,0 +1,11 @@
+{
+  "name": "@surelybrackets/f-inspector-movement-statistics_base-route",
+  "version": "0.6.12",
+  "description": "Base route for the historical-data app. Returns stock closing data, filtered by dates.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Bunch (bunch43@gmail.com)",
+  "license": "ISC"
+}

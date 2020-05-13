@@ -5,6 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "init": "npm i & git config core.hooksPath hooks",
+    "install": "lerna bootstrap --hoist --no-ci",
+    "install:prod": "lerna bootstrap --hoist --production --ci",
     "start": "npm run build && npm run server-up",
     "start:dev": "nodemon",
     "start:prod": "npm run build && docker-compose build && docker-compose up -d",
@@ -36,6 +38,7 @@
     "eslint-config-prettier": "6.10.1",
     "eslint-plugin-prettier": "3.1.2",
     "jest": "25.3.0",
+    "lerna": "3.20.2",
     "nodemon": "2.0.2",
     "prettier": "2.0.4",
     "ts-jest": "25.3.1",
