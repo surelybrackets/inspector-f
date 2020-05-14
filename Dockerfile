@@ -7,8 +7,9 @@ WORKDIR /usr/src/app
 
 COPY ./dist ./dist
 COPY ./package.json ./package.json
+COPY ./lerna.json ./lerna.json
 
-RUN npm i --production
+RUN npm run install:prod
 
 EXPOSE 8080
 

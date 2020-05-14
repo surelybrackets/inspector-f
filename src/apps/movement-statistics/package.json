@@ -1,0 +1,11 @@
+{
+  "name": "@surelybrackets/f-inspector_movement-statistics",
+  "version": "0.6.12",
+  "description": "Express api returning historical forward movement statistics for stocks",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Bunch (bunch43@gmail.com)",
+  "license": "ISC"
+}

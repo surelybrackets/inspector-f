@@ -1,0 +1,11 @@
+{
+  "name": "@surelybrackets/f-inspector_movement-statistics-routes_base",
+  "version": "0.6.12",
+  "description": "Base route for the movement-statistics app. Returns forward movement statistics, filtered by date and timeframe.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Bunch (bunch43@gmail.com)",
+  "license": "ISC"
+}
