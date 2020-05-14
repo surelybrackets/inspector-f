@@ -1,5 +1,5 @@
 {
-  "name": "@surelybrackets/f-inspector-utils",
+  "name": "@surelybrackets/inspector-f-utils",
   "version": "0.6.12",
   "description": "Utility functions for f-inspector",
   "main": "index.ts",

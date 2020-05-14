@@ -1,5 +1,5 @@
 {
-  "name": "@surelybrackets/f-inspector_movement-statistics-routes_base",
+  "name": "@surelybrackets/inspector-f-apps_movement-statistics-routes_base",
   "version": "0.6.12",
   "description": "Base route for the movement-statistics app. Returns forward movement statistics, filtered by date and timeframe.",
   "main": "index.ts",

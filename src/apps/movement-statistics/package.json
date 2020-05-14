@@ -1,5 +1,5 @@
 {
-  "name": "@surelybrackets/f-inspector_movement-statistics",
+  "name": "@surelybrackets/inspector-f-apps_movement-statistics",
   "version": "0.6.12",
   "description": "Express api returning historical forward movement statistics for stocks",
   "main": "index.ts",
