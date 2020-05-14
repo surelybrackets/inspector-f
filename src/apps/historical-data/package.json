@@ -1,5 +1,5 @@
 {
-  "name": "@surelybrackets/f-inspector-historical-data",
+  "name": "@surelybrackets/f-inspector_historical-data",
   "version": "0.6.12",
   "description": "Express Api returning historical closing data for stocks.",
   "main": "index.ts",
