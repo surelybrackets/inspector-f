@@ -1,6 +1,6 @@
 {
   "name": "@surelybrackets/f-inspector-parsers",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "description": "Data parsers for f-inspector",
   "main": "index.ts",
   "scripts": {
