@@ -1,6 +1,6 @@
 {
   "name": "@surelybrackets/f-inspector-utils",
-  "version": "0.6.12-dev.1",
+  "version": "0.6.12",
   "description": "Utility functions for f-inspector",
   "main": "index.ts",
   "scripts": {
