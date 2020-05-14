@@ -1,6 +1,6 @@
 {
   "name": "@surelybrackets/f-inspector_historical-data-routes_base",
-  "version": "0.6.13",
+  "version": "0.6.12",
   "description": "Base route for the historical-data app. Returns stock closing data, filtered by dates.",
   "main": "index.ts",
   "scripts": {
