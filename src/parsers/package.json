@@ -9,6 +9,10 @@
   "author": "Matthew Bunch (bunch43@gmail.com)",
   "license": "ISC",
   "dependencies": {
+    "@surelybrackets/inspector-f-utils": "^0.6.12",
     "moment": "2.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "13.11.0"
   }
 }

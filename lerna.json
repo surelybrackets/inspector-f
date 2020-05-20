@@ -1,6 +1,5 @@
 {
   "packages": [
-    ".",
     "src/apps/*",
     "src/apps/*/routes/*",
     "src/parsers",

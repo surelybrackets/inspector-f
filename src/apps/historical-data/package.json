@@ -7,5 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Matthew Bunch (bunch43@gmail.com)",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@surelybrackets/inspector-f-apps_historical-data-routes_base": "^0.6.12",
+    "express": "4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.6",
+    "@types/node": "13.11.0"
+  }
 }

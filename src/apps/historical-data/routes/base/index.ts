@@ -1,5 +1,5 @@
 import express = require('express')
-import TickerData from '../../../../parsers/TickerData'
+import TickerData from '@surelybrackets/inspector-f-parsers/TickerData'
 import * as swaggerUI from 'swagger-ui-express'
 import docs from './swagger'
 
