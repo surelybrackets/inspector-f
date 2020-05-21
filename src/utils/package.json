@@ -1,13 +1,14 @@
 {
   "name": "@surelybrackets/inspector-f-utils",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "description": "Utility functions for f-inspector",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepublish": "cp ../../LICENSE ./LICENSE && npm run build"
   },
   "author": "Matthew Bunch (bunch43@gmail.com)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "0.19.2",
     "csvtojson": "2.0.10",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@types/csvtojson": "1.1.5",
-    "@types/node": "13.11.0"
+    "@types/node": "13.11.0",
+    "typescript": "^3.9.3"
   }
 }
