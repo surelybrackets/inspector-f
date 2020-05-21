@@ -1,19 +1,21 @@
 {
   "name": "@surelybrackets/inspector-f-apps_movement-statistics",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "description": "Express api returning historical forward movement statistics for stocks",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepublish": "cp ../../../LICENSE ./LICENSE && npm run build"
   },
   "author": "Matthew Bunch (bunch43@gmail.com)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "@surelybrackets/inspector-f-apps_movement-statistics-routes_base": "^0.6.12",
+    "@surelybrackets/inspector-f-apps_movement-statistics-routes_base": "latest",
     "express": "4.17.1"
   },
   "devDependencies": {
     "@types/express": "4.17.6",
-    "@types/node": "13.11.0"
+    "@types/node": "13.11.0",
+    "typescript": "3.9.3"
   }
 }
