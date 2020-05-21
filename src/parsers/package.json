@@ -1,18 +1,20 @@
 {
   "name": "@surelybrackets/inspector-f-parsers",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "description": "Data parsers for f-inspector",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepublish": "cp ../../LICENSE ./LICENSE && npm run build"
   },
   "author": "Matthew Bunch (bunch43@gmail.com)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "@surelybrackets/inspector-f-utils": "^0.6.12",
+    "@surelybrackets/inspector-f-utils": "latest",
     "moment": "2.24.0"
   },
   "devDependencies": {
-    "@types/node": "13.11.0"
+    "@types/node": "13.11.0",
+    "typescript": "3.9.3"
   }
 }

@@ -23,7 +23,7 @@
     "url": "git+https://github.com/surelybrackets/fin-ticker-historical-stats.git"
   },
   "author": "Matthew Bunch (bunch43@gmail.com)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/surelybrackets/fin-ticker-historical-stats/issues"
   },

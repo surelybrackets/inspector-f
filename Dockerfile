@@ -8,8 +8,7 @@ WORKDIR /usr/src/app
 COPY ./dist ./dist
 COPY ./package.json ./package.json
 COPY ./lerna.json ./lerna.json
-
-RUN npm run install:prod
+COPY ./node_modules ./node_modules
 
 EXPOSE 8080
 

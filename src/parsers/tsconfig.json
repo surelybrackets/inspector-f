@@ -2,7 +2,6 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "ESNext",
-        "outDir": "dist"
     },
     "exclude": ["node_modules", "__tests__"]
 }

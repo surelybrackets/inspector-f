@@ -4,9 +4,9 @@ import {
     getDataFromFile,
     extractDateFromDataFilename,
     saveHistoricalTickerData,
-} from '../../utils/saveData'
-import { dateFormat, validateDateRanges, isDateInDateRange } from '../../utils/dateUtils'
-import { fetchTickerData } from '../../utils/fetchData'
+} from '@surelybrackets/inspector-f-utils/saveData'
+import { dateFormat, validateDateRanges, isDateInDateRange } from '@surelybrackets/inspector-f-utils/dateUtils'
+import { fetchTickerData } from '@surelybrackets/inspector-f-utils/fetchData'
 import { utc, Moment } from 'moment'
 
 const testTicker = 'aapl'
