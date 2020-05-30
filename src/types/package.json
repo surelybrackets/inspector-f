@@ -1,0 +1,12 @@
+{
+  "name": "@surelybrackets/inspector-f_types",
+  "version": "0.6.13",
+  "description": "Common types for inspector-f microservices",
+  "main": "index.d.ts",
+  "types": "index.d.ts",
+  "scripts": {
+    "prepublish": "cp ../../LICENSE ./LICENSE"
+  },
+  "author": "Matthew Bunch (bunch43@gmail.com)",
+  "license": "MIT"
+}
