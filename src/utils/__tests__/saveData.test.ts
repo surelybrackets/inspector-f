@@ -7,6 +7,7 @@ import {
     extractDateFromDataFilename,
     saveHistoricalTickerData,
 } from '../saveData'
+import { TickerInfo } from '@surelybrackets/inspector-f_types'
 import fs = require('fs')
 import { utc } from 'moment'
 

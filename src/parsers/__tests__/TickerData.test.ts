@@ -8,6 +8,7 @@ import {
 import { dateFormat, validateDateRanges, isDateInDateRange } from '@surelybrackets/inspector-f-utils/dateUtils'
 import { fetchTickerData } from '@surelybrackets/inspector-f-utils/fetchData'
 import { utc, Moment } from 'moment'
+import { TickerInfo } from '@surelybrackets/inspector-f_types'
 
 const testTicker = 'aapl'
 const testData: TickerInfo = {

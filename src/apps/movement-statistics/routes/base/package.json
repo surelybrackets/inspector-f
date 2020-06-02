@@ -11,11 +11,12 @@
   "license": "MIT",
   "dependencies": {
     "@surelybrackets/inspector-f-parsers": "latest",
-    "@surelybrackets/inspector-f-utils": "^0.6.13",
+    "@surelybrackets/inspector-f-utils": "latest",
     "express": "4.17.1",
     "swagger-ui-express": "4.1.4"
   },
   "devDependencies": {
+    "@surelybrackets/inspector-f_types": "latest",
     "@types/express": "4.17.6",
     "@types/node": "13.11.0",
     "typescript": "3.9.3"

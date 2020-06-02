@@ -1,4 +1,5 @@
 import { getDateInYahooFinanceTime, generateYahooDataLink, parseCSV, fetchTickerData } from '../fetchData'
+import { TickerInfo, IntervalOptions } from '@surelybrackets/inspector-f_types'
 import axios from 'axios'
 import { utc, Moment } from 'moment'
 
@@ -43,7 +44,7 @@ describe('generateYahooDataLink(ticker: string, options?: YahooLinkOptions): str
         expect(generateYahooDataLink(testTicker, { endDate })).toBe(validationString)
     })
     it('generates link with interval', (): void => {
-        const interval: intervalOptions = '15m'
+        const interval: IntervalOptions = '15m'
         const validationString = `https://query1.finance.yahoo.com/v7/finance/download/${testTicker}?period1=0&period2=${getDateInYahooFinanceTime(
             utc(),
         )}&interval=${interval}&events=history`

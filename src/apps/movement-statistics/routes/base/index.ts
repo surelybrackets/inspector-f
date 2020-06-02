@@ -1,6 +1,7 @@
 import express = require('express')
 import TickerData from '@surelybrackets/inspector-f-parsers/TickerData'
 import { mean, median, mode, counts, min, max, std, sterr } from '@surelybrackets/inspector-f-utils/statistics'
+import { TickerInfo } from '@surelybrackets/inspector-f_types'
 import * as swaggerUI from 'swagger-ui-express'
 import docs from './swagger'
 

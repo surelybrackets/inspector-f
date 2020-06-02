@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { utc, Moment } from 'moment'
 import { logError } from './errorUtils'
+import { TickerInfo, IntervalOptions } from '@surelybrackets/inspector-f_types'
 
 import csv = require('csvtojson')
 
@@ -20,7 +21,7 @@ export const getDateInYahooFinanceTime = (date: Moment = utc()): number => {
     return slope * (base + daydSinceApr3)
 }
 
-type YahooLinkOptions = { startDate?: Moment; endDate?: Moment; interval?: intervalOptions }
+type YahooLinkOptions = { startDate?: Moment; endDate?: Moment; interval?: IntervalOptions }
 
 /**
  * Returns a link to download data related to a specific stock ticker from yahoo finance
