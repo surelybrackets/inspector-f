@@ -8,7 +8,7 @@ export type TickerInfo = {
     Volume: string
 }
 
-export type intervalOptions =
+export type IntervalOptions =
     | '1m'
     | '2m'
     | '5m'

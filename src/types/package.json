@@ -1,6 +1,6 @@
 {
   "name": "@surelybrackets/inspector-f_types",
-  "version": "0.6.14",
+  "version": "0.6.15",
   "description": "Common types for inspector-f microservices",
   "main": "index.d.ts",
   "types": "index.d.ts",
