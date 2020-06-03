@@ -1,8 +1,8 @@
 {
   "name": "@surelybrackets/inspector-f-parsers",
-  "version": "0.6.13",
+  "version": "0.6.15",
   "description": "Data parsers for f-inspector",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "build": "tsc",
     "prepublish": "cp ../../LICENSE ./LICENSE && npm run build"

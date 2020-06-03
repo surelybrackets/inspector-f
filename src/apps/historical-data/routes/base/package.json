@@ -1,8 +1,8 @@
 {
   "name": "@surelybrackets/inspector-f-apps_historical-data-routes_base",
-  "version": "0.6.13",
+  "version": "0.6.15",
   "description": "Base route for the historical-data app. Returns stock closing data, filtered by dates.",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "build": "tsc",
     "prepublish": "cp ../../../../../LICENSE ./LICENSE && npm run build"

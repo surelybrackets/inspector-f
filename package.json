@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/surelybrackets/fin-ticker-historical-stats#readme",
   "devDependencies": {
+    "@surelybrackets/inspector-f_types": "latest",
     "@types/express": "4.17.6",
     "@types/jest": "25.2.1",
     "@types/node": "13.11.0",

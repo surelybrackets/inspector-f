@@ -1,8 +1,8 @@
 {
   "name": "@surelybrackets/inspector-f-apps_movement-statistics-routes_base",
-  "version": "0.6.13",
+  "version": "0.6.16",
   "description": "Base route for the movement-statistics app. Returns forward movement statistics, filtered by date and timeframe.",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "build": "tsc",
     "prepublish": "cp ../../../../../LICENSE ./LICENSE && npm run build"
