@@ -15,6 +15,7 @@
     "build": "tsc",
     "test": "jest --coverage",
     "lint": "eslint ./src/**/*.ts",
+    "create-app": "plop",
     "preversion": "npm run test",
     "postversion": "git push --tags origin master"
   },
@@ -40,13 +41,14 @@
     "eslint-plugin-prettier": "3.1.2",
     "jest": "25.3.0",
     "nodemon": "2.0.2",
+    "plop": "^2.7.1",
     "prettier": "2.0.4",
     "ts-jest": "25.3.1",
     "ts-node": "8.8.2"
   },
   "dependencies": {
     "@surelybrackets/inspector-f-apps_historical-data": "./src/apps/historical-data",
-    "@surelybrackets/inspector-f-apps_movement-statistics": "latest",
+    "@surelybrackets/inspector-f-apps_movement-statistics": "./src/apps/movement-statistics",
     "express": "4.17.1",
     "lerna": "3.20.2",
     "typescript": "3.8.3"
