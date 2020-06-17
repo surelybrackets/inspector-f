@@ -10,11 +10,11 @@
   "author": "Matthew Bunch (bunch43@gmail.com)",
   "license": "MIT",
   "dependencies": {
-    "@surelybrackets/inspector-f-utils": "latest",
+    "@surelybrackets/inspector-f-utils": "../utils",
     "moment": "2.24.0"
   },
   "devDependencies": {
-    "@surelybrackets/inspector-f_types": "latest",
+    "@surelybrackets/inspector-f_types": "../types",
     "@types/node": "13.11.0",
     "typescript": "3.9.3"
   }

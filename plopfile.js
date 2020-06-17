@@ -87,8 +87,6 @@ module.exports = function (plop) {
         const package = require('./package.json')
         package.dependencies[`@surelybrackets/inspector-f-apps_${answers.name}`] = `./src/apps/${answers.name}`
         fs.writeFileSync('./package.json', JSON.stringify(package))
-        var exec = require('child_process').exec
-        exec('npm i')
         return 0
     })
     plop.setGenerator('Create App', {

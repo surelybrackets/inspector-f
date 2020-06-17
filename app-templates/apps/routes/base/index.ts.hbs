@@ -10,8 +10,8 @@ const routePath = ''
 
 route.use(`/api-docs${routePath}`, swaggerUI.serve, swaggerUI.setup(docs))
 
-route.get(`${routePath}/:ticker`, async (req, res) => {
-    res.send({ 404: "App is under construction" })
+route.get(`${routePath}/:var`, async (req, res) => {
+    res.send({ 404: 'App is under construction' })
 })
 
 module.exports.route = route
