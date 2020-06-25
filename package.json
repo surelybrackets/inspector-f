@@ -51,7 +51,8 @@
     "@surelybrackets/inspector-f-apps_movement-statistics": "./src/apps/movement-statistics",
     "express": "4.17.1",
     "lerna": "3.20.2",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "@surelybrackets/inspector-f-apps_inspectors": "./src/apps/inspectors"
   },
   "nodemonConfig": {
     "ignore": [
