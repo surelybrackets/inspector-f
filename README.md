@@ -50,3 +50,19 @@ Linting has been configured to maintain code consistency. To check changes again
 npm run lint
 ```
 Linting is running on the pre-commit hook. To view rules, refer to the `.eslintrc.js` configuration file.
+
+#### Creating new apps and routes
+
+To facilitate development and to maintain code consistency, automatic code generators are provided for the creation of new api apps and routes. Use the following command to initialize new projects:
+```sh
+npm run create-app
+```
+You will be prompted to choose a generator. The following generators are available:
+
+##### Create App
+
+This generator will create a new app within the api (an app is a collection related routes). After completion, several files will be created in the base directory. This includes the `package.json .gitignore .npmignore, tsconfig.json` and any other admininstration files, a boilerplate swagger doc and index.ts (which hooks the app into the api). A base route is also created, meaning a route named (`inspector-f/<app-name>/:id`). This route can be deleted if not needed.
+
+##### Add route
+
+This generator will add a new route to an existing app. You will be prompted to select the target app. After completion, several files will be created in the base directory. This includes the `package.json .gitignore .npmignore, tsconfig.json` and any other admininstration files, a boilerplate swagger doc and index.ts (which hooks the app into the api). This will create a route named (`inspector-f/<app-name>/<route-name>/:id`).
