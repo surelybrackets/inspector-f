@@ -67,5 +67,11 @@ This generator will create a new app within the api (an app is a collection rela
 
 This generator will add a new route to an existing app. You will be prompted to select the target app. After completion, several files will be created in the base directory. This includes the `package.json .gitignore .npmignore, tsconfig.json` and any other admininstration files, a boilerplate swagger doc and index.ts (which hooks the app into the api). This will create a route named (`inspector-f/<app-name>/<route-name>/:id`).
 
+**NOTE: After running the generators, you must run the following commands to complete the api hookup.**
+```sh
+npm run clean
+npm install
+```
+
 Generators utilize [plop](https://plopjs.com/) for code creation. Templates can be found in the `app-templates/` directory.
 
