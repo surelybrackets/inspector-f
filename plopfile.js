@@ -169,7 +169,7 @@ module.exports = function (plop) {
         actions: [
             ...baseAppFiles,
             {
-                type: 'append-app-to-loader',
+                type: 'append-app-to-main-loader',
             },
             {
                 type: 'add-dependency-to-main-package',
