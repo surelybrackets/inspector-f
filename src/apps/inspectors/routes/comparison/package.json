@@ -1,7 +1,7 @@
 {
-  "name": "@surelybrackets/inspector-f-apps_-routes_base",
+  "name": "@surelybrackets/inspector-f-apps_-routes_comparison",
   "version": "0.0.1",
-  "description": "Base route for the {{app}} app.",
+  "description": "An api returning a date range string based off a query. Queries include a equality check and list of values to query off.",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
