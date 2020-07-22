@@ -12,7 +12,7 @@
     "start:dev": "nodemon",
     "start:prod": "npm run install:prod && npm run build && docker-compose build && docker-compose up -d",
     "server-up": "node dist",
-    "build": "lerna run build",
+    "build": "lerna run build && tsc && bash ./create_dist",
     "test": "jest --coverage",
     "lint": "eslint ./src/**/*.ts",
     "create-app": "plop",
