@@ -1,12 +1,11 @@
 import express = require('express')
-// import TickerData from '@surelybrackets/inspector-f-parsers/TickerData'
-// import {} from '@surelybrackets/inspector-f-utils/...'
-// import { TickerInfo } from '@surelybrackets/inspector-f_types'
+// import TickerData from '../../../../parsers/TickerData'
+// import {} from '../../../../utils/...'
 import * as swaggerUI from 'swagger-ui-express'
 import docs from './swagger'
 
 const route = express()
-const routePath = '/{{route}}'
+const routePath = '{{route}}'
 
 route.use(`/api-docs${routePath}`, swaggerUI.serve, swaggerUI.setup(docs))
 

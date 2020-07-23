@@ -1,5 +1,4 @@
 import { getDateInYahooFinanceTime, generateYahooDataLink, parseCSV, fetchTickerData } from '../fetchData'
-import { TickerInfo, IntervalOptions } from '@surelybrackets/inspector-f_types'
 import axios from 'axios'
 import { utc, Moment } from 'moment'
 

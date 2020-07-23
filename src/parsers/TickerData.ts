@@ -4,10 +4,9 @@ import {
     saveHistoricalTickerData,
     getDataFromFile,
     extractDateFromDataFilename,
-} from '@surelybrackets/inspector-f-utils/saveData'
-import { fetchTickerData } from '@surelybrackets/inspector-f-utils/fetchData'
-import { validateDateRanges, isDateInDateRange, dateFormat } from '@surelybrackets/inspector-f-utils/dateUtils'
-import { TickerInfo } from '@surelybrackets/inspector-f_types'
+} from '../utils/saveData'
+import { fetchTickerData } from '../utils/fetchData'
+import { validateDateRanges, isDateInDateRange, dateFormat } from '../utils/dateUtils'
 
 export default class TickerData {
     private _data: TickerInfo[]

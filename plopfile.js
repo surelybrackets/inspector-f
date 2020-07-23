@@ -6,39 +6,9 @@ const baseAppFiles = [
     },
     {
         type: 'add',
-        path: 'src/apps/{{app}}/.gitignore',
-        templateFile: 'app-templates/apps/.gitignore.hbs',
-    },
-    {
-        type: 'add',
-        path: 'src/apps/{{app}}/.npmignore',
-        templateFile: 'app-templates/apps/.npmignore.hbs',
-    },
-    {
-        type: 'add',
-        path: 'src/apps/{{app}}/package.json',
-        templateFile: 'app-templates/apps/package.json.hbs',
-    },
-    {
-        type: 'add',
-        path: 'src/apps/{{app}}/tsconfig.json',
-        templateFile: 'app-templates/apps/tsconfig.json.hbs',
-    },
-    {
-        type: 'add',
         path: 'src/apps/{{app}}/routes/index.ts',
         templateFile: 'app-templates/routes/index.ts.hbs',
         data: { route: 'base' },
-    },
-    {
-        type: 'add',
-        path: 'src/apps/{{app}}/routes/base/.gitignore',
-        templateFile: 'app-templates/routes/route/.gitignore.hbs',
-    },
-    {
-        type: 'add',
-        path: 'src/apps/{{app}}/routes/base/.npmignore',
-        templateFile: 'app-templates/routes/route/.npmignore.hbs',
     },
     {
         type: 'add',
@@ -48,36 +18,12 @@ const baseAppFiles = [
     },
     {
         type: 'add',
-        path: 'src/apps/{{app}}/routes/base/package.json',
-        templateFile: 'app-templates/routes/route/package.json.hbs',
-        data: {
-            route: 'base',
-            route_description: 'Base route for the {{app}} app.',
-        },
-    },
-    {
-        type: 'add',
         path: 'src/apps/{{app}}/routes/base/swagger.ts',
         templateFile: 'app-templates/routes/route/swagger.ts.hbs',
-    },
-    {
-        type: 'add',
-        path: 'src/apps/{{app}}/routes/base/tsconfig.json',
-        templateFile: 'app-templates/routes/route/tsconfig.json.hbs',
     },
 ]
 
 const routeFiles = [
-    {
-        type: 'add',
-        path: 'src/apps/{{app}}/routes/{{route}}/.gitignore',
-        templateFile: 'app-templates/routes/route/.gitignore.hbs',
-    },
-    {
-        type: 'add',
-        path: 'src/apps/{{app}}/routes/{{route}}/.npmignore',
-        templateFile: 'app-templates/routes/route/.npmignore.hbs',
-    },
     {
         type: 'add',
         path: 'src/apps/{{app}}/routes/{{route}}/index.ts',
@@ -85,18 +31,8 @@ const routeFiles = [
     },
     {
         type: 'add',
-        path: 'src/apps/{{app}}/routes/{{route}}/package.json',
-        templateFile: 'app-templates/routes/route/package.json.hbs',
-    },
-    {
-        type: 'add',
         path: 'src/apps/{{app}}/routes/{{route}}/swagger.ts',
         templateFile: 'app-templates/routes/route/swagger.ts.hbs',
-    },
-    {
-        type: 'add',
-        path: 'src/apps/{{app}}/routes/{{route}}/tsconfig.json',
-        templateFile: 'app-templates/routes/route/tsconfig.json.hbs',
     },
 ]
 
@@ -127,29 +63,17 @@ const toCamelCase = (kabab) => {
 
 module.exports = function (plop) {
     plop.setActionType('append-app-to-main-loader', function (answers, config, plop) {
-        const importString = `export * as ${toCamelCase(answers.app)} from '@surelybrackets/inspector-f-apps_${
+        const importString = `export * as ${toCamelCase(answers.app)} from './${
             answers.app
         }'\n`
         fs.appendFileSync('./src/apps/index.ts', importString)
         return 0
     })
-    plop.setActionType('add-dependency-to-main-package', function (answers, config, plop) {
-        const package = require('./package.json')
-        package.dependencies[`@surelybrackets/inspector-f-apps_${answers.app}`] = `./src/apps/${answers.app}`
-        fs.writeFileSync('./package.json', JSON.stringify(package))
-        return 0
-    })
     plop.setActionType('append-app-to-app-loader', function (answers, config, plop) {
-        const importString = `export * as ${toCamelCase(answers.route)} from '@surelybrackets/inspector-f-apps_${
+        const importString = `export * as ${toCamelCase(answers.route)} from './${
             answers.app
         }-routes_${answers.route}'\n`
         fs.appendFileSync(`./src/apps/${answers.app}/routes/index.ts`, importString)
-        return 0
-    })
-    plop.setActionType('add-dependency-to-app-package', function (answers, config, plop) {
-        const package = require(`./src/apps/${answers.app}/package.json`)
-        package.dependencies[`@surelybrackets/inspector-f-apps_${answers.app}-routes_${answers.route}`] = `./routes/${answers.route}`
-        fs.writeFileSync(`./src/apps/${answers.app}/package.json`, JSON.stringify(package))
         return 0
     })
     plop.setGenerator('Create App', {
@@ -170,10 +94,7 @@ module.exports = function (plop) {
             ...baseAppFiles,
             {
                 type: 'append-app-to-main-loader',
-            },
-            {
-                type: 'add-dependency-to-main-package',
-            },
+            }
         ],
     })
     plop.setGenerator('Add route', {
@@ -200,9 +121,6 @@ module.exports = function (plop) {
             ...routeFiles,
             {
                 type: 'append-app-to-app-loader',
-            },
-            {
-                type: 'add-dependency-to-app-package'
             }
         ]
     })

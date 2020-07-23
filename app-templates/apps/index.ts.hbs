@@ -2,7 +2,7 @@ import express = require('express')
 import * as routes from './routes'
 
 const app = express()
-const appPath = '/{{name}}'
+const appPath = '/{{app}}'
 
 Object.keys(routes).forEach((rt): void => {
     const { route } = routes[rt]

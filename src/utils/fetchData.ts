@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { utc, Moment } from 'moment'
 import { logError } from './errorUtils'
-import { TickerInfo, IntervalOptions } from '@surelybrackets/inspector-f_types'
 
 import csv = require('csvtojson')
 

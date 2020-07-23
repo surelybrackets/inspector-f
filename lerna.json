@@ -1,9 +1,0 @@
-{
-  "packages": [
-    "src/apps/*",
-    "src/apps/*/routes/*",
-    "src/parsers",
-    "src/utils"
-  ],
-  "version": "independent"
-}

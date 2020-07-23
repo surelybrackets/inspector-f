@@ -5,6 +5,7 @@ const api = express()
 const PORT = 8080
 
 Object.keys(apps).forEach((appName) => {
+    console.log(appName)
     const { app } = apps[appName]
     api.use(app)
 })

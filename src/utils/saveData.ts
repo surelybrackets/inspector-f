@@ -1,6 +1,5 @@
 import { utc, Moment } from 'moment'
 import { logError } from './errorUtils'
-import { TickerInfo } from '@surelybrackets/inspector-f_types'
 import fs = require('fs')
 
 export const dataRoute = 'data'

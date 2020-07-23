@@ -4,5 +4,5 @@
         "target": "ESNext",
         "outDir": "dist"
     },
-    "exclude": ["node_modules", "__tests__", "src/*/**/*.ts"]
+    "exclude": ["node_modules", "__tests__"]
 }

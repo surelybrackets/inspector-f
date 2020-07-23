@@ -1,8 +1,0 @@
-#!/bin/bash
-
-find ./src -name "*.js" -print0 | while read -d $'\0' file
-do
-    directory=${file%/*}
-    mkdir -p "./dist/${directory#./src/*}"
-    cp $file "./dist/${file#./src/*}"
-done

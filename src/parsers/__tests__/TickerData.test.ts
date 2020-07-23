@@ -4,11 +4,10 @@ import {
     getDataFromFile,
     extractDateFromDataFilename,
     saveHistoricalTickerData,
-} from '@surelybrackets/inspector-f-utils/saveData'
-import { dateFormat, validateDateRanges, isDateInDateRange } from '@surelybrackets/inspector-f-utils/dateUtils'
-import { fetchTickerData } from '@surelybrackets/inspector-f-utils/fetchData'
+} from '../../utils/saveData'
+import { dateFormat, validateDateRanges, isDateInDateRange } from '../../utils/dateUtils'
+import { fetchTickerData } from '../../utils/fetchData'
 import { utc, Moment } from 'moment'
-import { TickerInfo } from '@surelybrackets/inspector-f_types'
 
 const testTicker = 'aapl'
 const testData: TickerInfo = {
